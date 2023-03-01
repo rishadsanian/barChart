@@ -1,0 +1,39 @@
+/*barChart Display*/
+#barChart {
+  margin: auto;
+  background-color: white;
+  border: solid black 1px;
+  width: 50%;
+  height: 100px;
+  padding: 5%;
+}
+
+/*axis */
+#axis {
+  margin: auto;
+  background-color: whitesmoke;
+  border-bottom: 2px dotted black;
+  border-left: 4px dotted black;
+  padding: 10%;
+}
+
+/*columns */
+#column1 {
+  margin: auto;
+  background-color: red;
+  float: left;
+  padding-top: 10%;
+  padding-bottom: 
+}
+
+#column2 {
+  background-color: blue;
+  float: left;
+  padding-top: 20%;
+}
+
+#column3 {
+  background-color: green;
+  float: left;
+  padding-top: 30%;
+}
