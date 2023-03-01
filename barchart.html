@@ -5,12 +5,39 @@
   <script src="script.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
   <link rel="stylesheet" href="styles.css">
-  </head>
+  <title>Bar Chart Maker</title>
+</head>
+
 <body>
   <header>
     <h1>Stretch Project 1 - Bar Chart</h1>
-    
   </header>
 
+
+  <div id="input">
+    <button onclick="myFunction()">Try it</button>
+
+    <p id="demo"></p>
+
+    <script>
+      function myFunction() {
+        let text;
+        let person = prompt("Please enter your name:", "Harry Potter");
+        if (person == null || person == "") {
+          text = "User cancelled the prompt.";
+        } else {
+          text = "Hello " + person + "! How are you today?";
+        }
+        document.getElementById("demo").innerHTML = text;
+      }
+    </script>
+  </div>
+
+  <div>
+    <button onclick="getValues()">Submit</button>
+  </div>
+
+  
 </body>
+
 </html>
