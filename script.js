@@ -7,4 +7,13 @@ var element = "#barchart";
 console.log(drawBarChart(data, options, element));
 
 
+//data Input functions//
+
+
+//chart axis
+
+//chart graphic
+
+
+
 
