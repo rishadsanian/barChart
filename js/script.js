@@ -10,7 +10,10 @@ var element = "#barchart";
 var columns = {};
 var maxValue = data.max;
 for (var i = 0; i < data.length; i++) {
-  (data[i]) = { color: "red", height: ((data[i]) / maxValue) * 100, label: labels[i] };
+  (data[i]) = {
+    color: "red",
+    height: ((data[i]) / maxValue) * 100,
+    label: labels[i] };
 
 }
 console.log(drawBarChart(data, options, element));

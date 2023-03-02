@@ -7,15 +7,17 @@ There are intentionally no visuals provided with this project, and many aspects 
 <html>
 
 <head>
-  <script src="script.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-  <link rel="stylesheet" href="styles.css">
+  <script src="js/script.js"></script>
+  <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>-->
+  <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="css/styles.css">
   <title>Bar Chart Maker</title>
 </head>
 
 <body>
   <header>
-    <h1>Stretch Project 1 - Bar Chart</h1>
+    <h1 >Stretch Project 1 - Bar Chart</h1>
   </header>
 
 
@@ -41,21 +43,24 @@ There are intentionally no visuals provided with this project, and many aspects 
   <div>
     <button onclick="getValues()">Submit</button>
   </div>
+  <br>
+  <br>
 
   <div id="barChart">
     <div id="axis">
+      <h2>Y Axis</h2>
       <div class="row">
-        <div id="column1">
+        <div id="bar1">
           <p id="label1">
             label1
           </p>
         </div>
-        <div id="column2">
+        <div id="bar2">
           <p id="label2">
             label2
           </p>
         </div>
-        <div id="column3">
+        <div id="bar3">
           <p id="label3">
             label3
           </p>

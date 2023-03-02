@@ -3,9 +3,9 @@
   margin: auto;
   background-color: white;
   border: solid black 1px;
-  width: 50%;
-  height: 100px;
-  padding: 5%;
+  width: 80%;
+  height: 80%;
+  padding: 2%;
 }
 
 /*axis */
@@ -13,22 +13,24 @@
   position: relative;
   margin: auto;
   background-color: whitesmoke;
-  border-bottom: 2px dotted black;
-  border-left: 4px dotted black;
+  border-style: none none groove dashed;
+  
   padding: 8%;
-  width: 50%
+  width: 70%;
+  height: 60%;
 }
 
 /*columns */
-#column1 {
+#bar1 {
   position: absolute;
   margin: auto;
   background-color: tomato;
   float: left;
   height: 80%;
   bottom: 0;
-  left: 5%;
-  width:10%
+  left: 23%;
+  width:10%;
+  text-align: center;
   
 
 
@@ -37,25 +39,27 @@
 
 }
 
-#column2 {
+#bar2 {
   position: absolute;
   background-color: orange;
-  left: 20%;
+  left: 56%;
   float: left;
   height: 40%;
   bottom: 0%;
-  width:10%
+  width:10%;
+  text-align: center;
   
     /*padding-top: 20%;*/
 }
 
-#column3 {
+#bar3 {
   position: absolute;
   background-color: dodgerblue;
   float: left;
   height: 70%;
   bottom: 0;
-  left: 35%;
-  width:10%
+  left: 90%;
+  width:10%;
+  text-align: center;
   /*padding-top: 30%;*/
 }
