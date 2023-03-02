@@ -1,3 +1,6 @@
+body {
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
 /*barChart Display container*/
 .barChart {
   position:relative;
@@ -10,38 +13,42 @@
   border-style: groove;
   background-color: white;
   height: 80%;
-  width: 80%
+  width: 80%;
+
+  
 }
 
 .title {
-  background-color: whitesmoke;
+  /*background-color: whitesmoke;*/
   grid-area: 1/1/span 1/span 11;
   text-align: center;
-  border-style: groove;
+  /*border-style: groove;*/
+  font-size: 50px;
+  color:black
 }
 
 /*axis */
 .yAxis {
   
-  background-color: whitesmoke;
-  grid-area: 2/1/span 10 /span 1;
-  text-align: center;
-  border-style: groove;
+  /*background-color: whitesmoke;*/
+  grid-area: 2/1/span 10 /span 2;
+  text-align: left;
+   /*border-style: groove;*/
   
 }
 
 .xAxis {
-  background-color: whitesmoke;
+    /*background-color: whitesmoke;*/
   grid-area: 12/2/span 1 /span 10;
   text-align: center;
-  border-style: groove;
+   /*border-style: groove;*/
 }
 
 .markZero {
-  background-color: whitesmoke;
+    /*background-color: whitesmoke;*/
   grid-area: 12/1/span 1/ span 1;
   text-align: right;
-  border-style: groove;
+   /*border-style: groove;*/
 }
 
 .chartArea {
@@ -50,7 +57,7 @@
   grid-gap: 10%;
   padding-left: 10%;
   padding-right: 10%;
-  background-color: whitesmoke;
+    /*background-color: whitesmoke;*/
   border-style: none none groove groove;
   display: grid;
   grid-template-columns: auto auto auto;
@@ -95,4 +102,13 @@
   height: 30%;
   width: 100%
 
+}
+
+.label{
+  background-color: white;
+  position: center; 
+}
+
+.value{
+  position:center;
 }

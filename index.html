@@ -17,27 +17,39 @@ There are intentionally no visuals provclassed with this project, and many aspec
 
 <body>
   <header>
-    <h1>Stretch Project 1 - Bar Chart</h1>
+    <h1>Bar Chart Generator</h1>
   </header>
 
-
+  <!----------------------------------------------Inputs------------------------->
   <div class="input">
-    <button onclick="myFunction()">Try it</button>
 
-    <p class="demo"></p>
+    <form>
+      <h3>Data</h3>
+      <br>
+      <br><br>
+      Title: <input type="text"><br><br>
+      Size:
+      <select id="titleFontSize">
+        <option>Default</option>
+        <option>Small</option>  
+        <option>Large</option>
+      </select>
+      Colour: <select id="titleFontColour">
+        <option>Default</option>
+        <option>Small</option>  
+        <option>Large</option>
+      </select>
+      <br><br><br>
+      X-Axis Title: <input type="text">
+      Y-Axis Units: <input type="text">
+      <br><br><br>
+      Label: <input type="text"> 
+      Value: <input type="text"> 
+      Colour: <input type="text">
 
-    <script>
-      function myFunction() {
-        let text;
-        let person = prompt("Please enter your name:", "Harry Potter");
-        if (person == null || person == "") {
-          text = "User cancelled the prompt.";
-        } else {
-          text = "Hello " + person + "! How are you today?";
-        }
-        document.getElementByclass("demo").innerHTML = text;
-      }
-    </script>
+      <h3>Options</h3>
+
+    </form>
   </div>
 
   <div>
@@ -54,13 +66,13 @@ There are intentionally no visuals provclassed with this project, and many aspec
     <div class="yAxis">
       <div class="yTitle">Y Axis</div>
     </div>
-    <div class="markZero"> 0 </div>
+
     <div class="xAxis">
       <div class="xTitle"> X Axis</div>
       <div class="xLabels"></div>
     </div>
 
-    <div class="markZero"> 0 </div>
+    <div class="markZero"> </div>
 
     <div class="chartArea">
 
