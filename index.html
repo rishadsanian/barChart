@@ -1,6 +1,6 @@
 <!--This project will consist of building a library that will allow other developers to generate bar charts on their web pages using HTML, CSS and JavaScript. You'll also be using jQuery to access and manipulate the DOM in order to draw the charts.
 
-There are intentionally no visuals provided with this project, and many aspects of the UI are left intentionally vague. We are leaving you freedom to get creative with the UI. We encourage you to make the charts look presentable and even add extra flare with things like CSS transitions and animations.
+There are intentionally no visuals provclassed with this project, and many aspects of the UI are left intentionally vague. We are leaving you freedom to get creative with the UI. We encourage you to make the charts look presentable and even add extra flare with things like CSS transitions and animations.
 -->
 
 <!DOCTYPE html>
@@ -17,14 +17,14 @@ There are intentionally no visuals provided with this project, and many aspects 
 
 <body>
   <header>
-    <h1 >Stretch Project 1 - Bar Chart</h1>
+    <h1>Stretch Project 1 - Bar Chart</h1>
   </header>
 
 
-  <div id="input">
+  <div class="input">
     <button onclick="myFunction()">Try it</button>
 
-    <p id="demo"></p>
+    <p class="demo"></p>
 
     <script>
       function myFunction() {
@@ -35,7 +35,7 @@ There are intentionally no visuals provided with this project, and many aspects 
         } else {
           text = "Hello " + person + "! How are you today?";
         }
-        document.getElementById("demo").innerHTML = text;
+        document.getElementByclass("demo").innerHTML = text;
       }
     </script>
   </div>
@@ -46,27 +46,41 @@ There are intentionally no visuals provided with this project, and many aspects 
   <br>
   <br>
 
-  <div id="barChart">
-    <div id="axis">
-      <h2>Y Axis</h2>
-      <div class="row">
-        <div id="bar1">
-          <p id="label1">
-            label1
-          </p>
-        </div>
-        <div id="bar2">
-          <p id="label2">
-            label2
-          </p>
-        </div>
-        <div id="bar3">
-          <p id="label3">
-            label3
-          </p>
-        </div>
+  <div class="barChart">
+
+
+    <div class="title">Title</div>
+
+    <div class="yAxis">
+      <div class="yTitle">Y Axis</div>
+    </div>
+    <div class="markZero"> 0 </div>
+    <div class="xAxis">
+      <div class="xTitle"> X Axis</div>
+      <div class="xLabels"></div>
+    </div>
+
+    <div class="markZero"> 0 </div>
+
+    <div class="chartArea">
+
+      <div class="bar1">
+        <p class="label1">
+          Value1
+        </p>
+      </div>
+      <div class="bar2">
+        <p class="label2">
+          Value2
+        </p>
+      </div>
+      <div class="bar3">
+        <p class="label3">
+          Value3
+        </p>
       </div>
     </div>
+  </div>
 
   </div>
   <br><br><br>

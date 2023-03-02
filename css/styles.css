@@ -1,65 +1,98 @@
-/*barChart Display*/
-#barChart {
+/*barChart Display container*/
+.barChart {
+  position:relative;
+  display: grid;
+  grid-template-columns: auto auto auto auto auto;
+  grid-gap: 40px;
+  background-color: #2196F3;
+  padding: 10px;
   margin: auto;
+  border-style: groove;
   background-color: white;
-  border: solid black 1px;
-  width: 80%;
   height: 80%;
-  padding: 2%;
+  width: 80%
+}
+
+.title {
+  background-color: whitesmoke;
+  grid-area: 1/1/span 1/span 11;
+  text-align: center;
+  border-style: groove;
 }
 
 /*axis */
-#axis {
-  position: relative;
-  margin: auto;
-  background-color: whitesmoke;
-  border-style: none none groove dashed;
+.yAxis {
   
-  padding: 8%;
-  width: 70%;
-  height: 60%;
+  background-color: whitesmoke;
+  grid-area: 2/1/span 10 /span 1;
+  text-align: center;
+  border-style: groove;
+  
+}
+
+.xAxis {
+  background-color: whitesmoke;
+  grid-area: 12/2/span 1 /span 10;
+  text-align: center;
+  border-style: groove;
+}
+
+.markZero {
+  background-color: whitesmoke;
+  grid-area: 12/1/span 1/ span 1;
+  text-align: right;
+  border-style: groove;
+}
+
+.chartArea {
+  position: relative;
+  grid-area: 2/2/span 10/span 10;
+  grid-gap: 10%;
+  padding-left: 10%;
+  padding-right: 10%;
+  background-color: whitesmoke;
+  border-style: none none groove groove;
+  display: grid;
+  grid-template-columns: auto auto auto;
+
+  
 }
 
 /*columns */
-#bar1 {
+.bar1 {
   position: absolute;
+  grid-area: 1/1/span 1/span 1;
   margin: auto;
   background-color: tomato;
-  float: left;
-  height: 80%;
   bottom: 0;
-  left: 23%;
-  width:10%;
   text-align: center;
-  
+  height: 10%;
+  width: 100%;
 
-
-  /*padding-top: 10%;
-  padding-bottom:*/
 
 }
 
-#bar2 {
+.bar2 {
   position: absolute;
+  grid-area: 1/2/span 1/span 1;
+  margin: auto;
   background-color: orange;
-  left: 56%;
-  float: left;
-  height: 40%;
-  bottom: 0%;
-  width:10%;
+  bottom: 0;
   text-align: center;
-  
-    /*padding-top: 20%;*/
+  height: 20%;
+  width: 100%;
+
+
 }
 
-#bar3 {
+.bar3 {
   position: absolute;
+  grid-area: 1/3/span 1/span 1;
+  margin: auto;
   background-color: dodgerblue;
-  float: left;
-  height: 70%;
   bottom: 0;
-  left: 90%;
-  width:10%;
   text-align: center;
-  /*padding-top: 30%;*/
+  height: 30%;
+  width: 100%
+
 }
