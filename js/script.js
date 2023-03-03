@@ -38,7 +38,7 @@ Font Colour
 /////////single value
 //input variables
 var data = [1, 2, 3, 4, 5];
-var labels = ["a", "b", "c", "d", "e"];
+
 
 
 
@@ -60,6 +60,8 @@ var titleFontColour = [];
 var valuePos = ["Top", "Centre", "Bottom"];
 
 //Bar and Labels
+
+
 var labelColour = "";
 var barColour = "";
 var barSpacing = "";
@@ -69,6 +71,13 @@ var yAxisTitle = "Units";
 //////Rendering variables
 var barWidth = "";
 var barHeight = "";
+
+
+
+////functions
+
+
+
 
 var drawBarChart = function (data, options, element) {
   console.log("");
