@@ -38,40 +38,46 @@ Font Colour
 /////////single value
 //input variables
 var data = [1, 2, 3, 4, 5];
-var options = {};
+var options = {
+  //Title//
+  titleName: "Title",
+  titleFontSize: "40px",
+  titleFontColour: "black",
+  //Bar//
+  barColour: "orange",
+  labelColour: "green",
+  barSpacing: "20%",
+  //Axes//
+  yTitle: "Units",
+  xTitle: "X-Axis",
+  //Labels//
+  labels: [a, b, c, d, e],
+  //Value Position inside bar
+  valuePos: "0%"
+};
 var element = "";
 
 
+//Rendering non-customizable //functions//
 
-////////////////////OPTIONS///////////////////////////
-//input variables
-
-//prompt variables
-
-//type
-var barType = ["Single value", "Multiple Value (Stacked)"];
-
-//title
-var titleName = "";
-var titleFontSize = "";
-var titleFontColour = [];
-//var title = { name: titleName, size: titleFontSize, colour: titleFontColour };
-
-//Numerical value position
-var valuePos = ["Top", "Centre", "Bottom"];
-
-//Bar and Labels
-
-
-var labelColour = "";
-var barColour = "";
-var barSpacing = "";
-var xAxisTitle = "X-Axis Title";
-var yAxisTitle = "Units";
-
-//////Rendering variables
+var dataNorm = function (data){
+  
+};
+var maxValue = data.max;
+var maxYTick = Math.ceil(1.25 * data.maxValue);
+var yTicks = [];
 var barWidth = "";
 var barHeight = "";
+var barType = ["Single value", "Multiple Value (Stacked)"];
+
+
+//DataNormalization
+
+//MaxValue Determination
+
+//Max Y tick and Y ticks
+
+
 
 
 
@@ -86,7 +92,7 @@ var drawBarChart = function (data, options, element) {
 
 
 var columns = {};
-var maxValue = data.max;
+
 /*for (var i = 0; i < data.length; i++) {
   (data[i]) = {
     color: "red",
