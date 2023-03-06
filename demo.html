@@ -1,0 +1,104 @@
+<!--This project will consist of building a library that will allow other developers to generate bar charts on their web pages using HTML, CSS and JavaScript. You'll also be using jQuery to access and manipulate the DOM in order to draw the charts.There are intentionally no visuals provclassed with this project, and many aspects of the UI are left intentionally vague. We are leaving you freedom to get creative with the UI. We encourage you to make the charts look presentable and even add extra flare with things like CSS transitions and animations.-->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="js/script.js" ></script>
+  <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>-->
+  <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="css/styles.css">
+  <title>Bar Chart Maker</title>
+</head>
+
+<body>
+  <header>
+    <h1>Bar Chart Generator</h1>
+  </header>
+
+  <!----------------------------------------------Inputs----------------------
+  <div class="input">
+
+    <form>
+      <h3>Data</h3>
+      <br>
+      <br><br>
+      Title: <input type="text"><br><br>
+      Size:
+      <select id="titleFontSize">
+        <option>Default</option>
+        <option>Small</option>
+        <option>Large</option>
+      </select>
+      Colour: <select id="titleFontColour">
+        <option>Default</option>
+        <option>Small</option>
+        <option>Large</option>
+      </select>
+      <br><br><br>
+      X-Axis Title: <input type="text">
+      Y-Axis Units: <input type="text">
+      <br><br><br>
+      Label: <input type="text">
+      Value: <input type="text">
+      Colour: <input type="text">
+
+      <h3>Options</h3>
+
+    </form>
+  </div>
+
+  <div>
+    <button onclick="getValues()">Submit</button>
+  </div>
+  <br>
+  <br>
+  --->
+  <!-----------Chart Generator------------->
+  <div class="barChart">
+
+    <div class="title">Title</div>
+
+
+    <div class="yAxis">
+
+      <div class="yTitle">Units</div>
+
+      <div class="yTicks">5-<br><br><br><br>4-<br><br><br><br>3-<br><br><br><br>2-<br><br><br><br>1-<br><br><br><br>0_
+      </div>
+
+    </div>
+
+    <div class="xAxis">
+      <div class="label1">a</div>
+      <div class="label2">b</div>
+      <div class="label3">c</div>
+    </div>
+
+
+    <div class="chartArea">
+
+      <div class="bar1">
+        <p class="value1">
+          Value1
+        </p>
+      </div>
+      <div class="bar2">
+        <p class="value2">
+          Value2
+        </p>
+      </div>
+      <div class="bar3">
+        <p class="value3">
+          Value3
+        </p>
+      </div>
+    </div>
+  </div>
+
+  </div>
+  <br><br><br>
+</body>
+
+</html>

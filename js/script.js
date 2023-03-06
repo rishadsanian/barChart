@@ -38,7 +38,8 @@ Font Colour
 /////////single value
 //input variables
 var data = [1, 2, 3, 4, 5];
-
+var options = {};
+var element = "";
 
 
 
@@ -84,18 +85,16 @@ var drawBarChart = function (data, options, element) {
 };
 
 
-var options = { width: 100, height: 100 };
-var element = "#barchart";
 var columns = {};
 var maxValue = data.max;
-for (var i = 0; i < data.length; i++) {
+/*for (var i = 0; i < data.length; i++) {
   (data[i]) = {
     color: "red",
     height: ((data[i]) / maxValue) * 100,
     label: labels[i]
   };
 
-}
+}*/
 console.log(drawBarChart(data, options, element));
 console.log(maxValue);
 console.log(data);
@@ -110,3 +109,6 @@ console.log(data);
 
 
 
+var value1 = document.getElementsByClassName('value1');
+// then we set it's innerHTML property
+value1.innerHTML = '200';
