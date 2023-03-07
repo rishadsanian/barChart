@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html>
 
 <head>
-  <script src="js/script.js" ></script>
+  <script src="js/script.js"></script>
   <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>-->
   <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
     crossorigin="anonymous"></script>
@@ -16,7 +15,81 @@
     <h1>Bar Chart Generator</h1>
   </header>
 
-  <p id="chart">
+  <p>
 
-    
   </p>
+
+  <script>
+    function drawBarChart(data, options, element) {
+
+      var data = [1, 2, 3, 4, 5];
+
+      var options = {
+        //Title//
+        titleName: "Title",
+        titleFontSize: "40px",
+        titleFontColour: "black",
+        //Bar//
+        barColour: "orange",
+        labelColour: "green",
+        barSpacing: "20%",
+        //Axes//
+        yTitle: "Units",
+        xTitle: "X-Axis",
+        //Labels//
+        labels: ["a", "b", "c", "d", "e"],
+        //Value Position inside bar
+        valuePos: "0%"
+      };
+
+      var element = "p";
+
+      var chartText = `<div class="barChart">
+
+<div class="title">${options.titleName}</div>
+
+
+<div class="yAxis">
+
+  <div class="yTitle">${options.yTitle}</div>
+
+  <div class="yTicks">5-<br><br><br><br>4-<br><br><br><br>3-<br><br><br><br>2-<br><br><br><br>1-<br><br><br><br>0_
+  </div>
+
+</div>
+
+<div class="xAxis">
+  <div class="label1">a</div>
+  <div class="label2">b</div>
+  <div class="label3">c</div>
+  <div class="xTitle">${options.xTitle}</div>
+</div>
+
+
+
+<div class="chartArea">
+
+  <div class="bar1">
+    <p class="value1">
+      Value1
+    </p>
+  </div>
+  <div class="bar2">
+    <p class="value2">
+      Value2
+    </p>
+  </div>
+  <div class="bar3">
+    <p class="value3">
+      Value3
+    </p>
+  </div>
+</div>
+</div>
+`;
+      $(element).append(chartText);
+    }
+
+    $(document).ready(drawBarChart(data, options, element));
+
+  </script>

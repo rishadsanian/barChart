@@ -51,7 +51,7 @@ var options = {
   yTitle: "Units",
   xTitle: "X-Axis",
   //Labels//
-  labels: [a, b, c, d, e],
+  labels: ["a", "b", "c", "d", "e"],
   //Value Position inside bar
   valuePos: "0%"
 };
@@ -60,8 +60,8 @@ var element = "";
 
 //Rendering non-customizable //functions//
 
-var dataNorm = function (data){
-  
+var dataNorm = function (data) {
+  return data;
 };
 var maxValue = data.max;
 var maxYTick = Math.ceil(1.25 * data.maxValue);
@@ -87,23 +87,66 @@ var barType = ["Single value", "Multiple Value (Stacked)"];
 
 
 var drawBarChart = function (data, options, element) {
-  console.log("");
+  var chartText = "aa";
+};
+/*`<div class="barChart">
+
+ <div class="title">${options.titleName}</div>
+
+
+ <div class="yAxis">
+
+   <div class="yTitle">Units</div>
+
+   <div class="yTicks">5-<br><br><br><br>4-<br><br><br><br>3-<br><br><br><br>2-<br><br><br><br>1-<br><br><br><br>0_
+   </div>
+
+ </div>
+
+ <div class="xAxis">
+   <div class="label1">a</div>
+   <div class="label2">b</div>
+   <div class="label3">c</div>
+   <div class="xTitle">X-Axis</div>
+ </div>
+
+ 
+
+ <div class="chartArea">
+
+   <div class="bar1">
+     <p class="value1">
+       Value1
+     </p>
+   </div>
+   <div class="bar2">
+     <p class="value2">
+       Value2
+     </p>
+   </div>
+   <div class="bar3">
+     <p class="value3">
+       Value3
+     </p>
+   </div>
+ </div>
+</div>
+`
+return chartText
 };
 
 
 var columns = {};
 
 /*for (var i = 0; i < data.length; i++) {
-  (data[i]) = {
-    color: "red",
-    height: ((data[i]) / maxValue) * 100,
-    label: labels[i]
-  };
+ (data[i]) = {
+   color: "red",
+   height: ((data[i]) / maxValue) * 100,
+   label: labels[i]
+ };
 
 }*/
 console.log(drawBarChart(data, options, element));
-console.log(maxValue);
-console.log(data);
 
 //data Input functions//
 
@@ -115,6 +158,3 @@ console.log(data);
 
 
 
-var value1 = document.getElementsByClassName('value1');
-// then we set it's innerHTML property
-value1.innerHTML = '200';
