@@ -44,6 +44,15 @@
 
       var element = "p";
 
+
+
+      ///Rendering////
+      var maxValue = data.max;
+      var maxYTick = Math.ceil(1.25 * data.maxValue);
+      var yTicks = [];
+      var barWidth = "";
+      var barHeight = "";
+        
       var chartText = `<div class="barChart">
 
 <div class="title">${options.titleName}</div>
@@ -87,6 +96,7 @@
 </div>
 </div>
 `;
+      $('style').append('This is paragraph.')
       $(element).append(chartText);
     }
 

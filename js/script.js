@@ -60,15 +60,7 @@ var element = "";
 
 //Rendering non-customizable //functions//
 
-var dataNorm = function (data) {
-  return data;
-};
-var maxValue = data.max;
-var maxYTick = Math.ceil(1.25 * data.maxValue);
-var yTicks = [];
-var barWidth = "";
-var barHeight = "";
-var barType = ["Single value", "Multiple Value (Stacked)"];
+
 
 
 //DataNormalization
@@ -87,7 +79,20 @@ var barType = ["Single value", "Multiple Value (Stacked)"];
 
 
 var drawBarChart = function (data, options, element) {
-  var chartText = "aa";
+  var dataNorm = function (data) {
+    return data;
+  };
+  var maxValue = data.max;
+  var maxYTick = Math.ceil(1.25 * data.maxValue);
+  var yTicks = [];
+  var barWidth = "";
+  var barHeight = "";
+  var barType = ["Single value", "Multiple Value (Stacked)"];
+
+
+  var barChart = {};
+  
+  
 };
 /*`<div class="barChart">
 
@@ -146,6 +151,8 @@ var columns = {};
  };
 
 }*/
+
+
 console.log(drawBarChart(data, options, element));
 
 //data Input functions//
