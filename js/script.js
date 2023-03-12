@@ -93,14 +93,15 @@ var barType = ["Single value", "Multiple Value (Stacked)"];
 var barChart = {};
 
 var yTicks = function (data) {
-  var yTicks = ['<br><br><br><br>0_'];
+  var yTicks = ['0_'];
   var maxValue = Math.max(data);
   var ticks = 0;
   for (i = 0; i < 5; i++) {
     ticks += Math.ceil(0.20 * maxValue);
-    yTicks.unshift(("<br><br><br><br>" + ticks + "-"));
+    yTicks.unshift((ticks + "-<br><br><br><br>"));
   }
   yTicks = yTicks.join("");
+  options.maxYValue = ticks;
   return (yTicks);
 }
 
@@ -185,6 +186,7 @@ element = "";
 
 console.log(drawBarChart(data, options, element));
 console.log(yTicks(data));
+console.log(options);
 //console.log(ticks);
 //data Input functions//
 
