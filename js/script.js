@@ -37,7 +37,7 @@ Font Colour
 
 /////////single value
 //input variables
-var data = [1, 2, 3, 4, 5];
+var data = (1, 2, 3);
 var options = {
   //Title//
   titleName: "Title",
@@ -57,7 +57,7 @@ var options = {
 };
 var element = "";
 
-
+//console.log(Math.max(data));
 //Rendering non-customizable //functions//
 
 
@@ -82,18 +82,29 @@ var drawBarChart = function (data, options, element) {
   var dataNorm = function (data) {
     return data;
   };
-  var maxValue = data.max;
-  var maxYTick = Math.ceil(1.25 * data.maxValue);
-  var yTicks = [];
-  var barWidth = "";
-  var barHeight = "";
-  var barType = ["Single value", "Multiple Value (Stacked)"];
 
-
-  var barChart = {};
-  
-  
 };
+
+var barWidth = "";
+var barHeight = "";
+var barType = ["Single value", "Multiple Value (Stacked)"];
+
+
+var barChart = {};
+
+var yTicks = function (data) {
+  var yTicks = ['<br><br><br><br>0_'];
+  var maxValue = Math.max(data);
+  var ticks = 0;
+  for (i = 0; i < 5; i++) {
+    ticks += Math.ceil(0.20 * maxValue);
+    yTicks.unshift(("<br><br><br><br>" + ticks + "-"));
+  }
+  yTicks = yTicks.join("");
+  return (yTicks);
+}
+
+  ;
 /*`<div class="barChart">
 
  <div class="title">${options.titleName}</div>
@@ -152,9 +163,29 @@ var columns = {};
 
 }*/
 
+data = (1, 2, 3);
+options = {
+  //Title//
+  titleName: "Title",
+  titleFontSize: "40px",
+  titleFontColour: "black",
+  //Bar//
+  barColour: "orange",
+  labelColour: "green",
+  barSpacing: "20%",
+  //Axes//
+  yTitle: "Units",
+  xTitle: "X-Axis",
+  //Labels//
+  labels: ["a", "b", "c"],
+  //Value Position inside bar
+  valuePos: "0%"
+};
+element = "";
 
 console.log(drawBarChart(data, options, element));
-
+console.log(yTicks(data));
+console.log(ticks);
 //data Input functions//
 
 
