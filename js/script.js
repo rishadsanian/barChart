@@ -97,7 +97,7 @@ var yTicks = function (data) {
   var maxValue = Math.max(data);
   var ticks = 0;
   for (i = 0; i < 5; i++) {
-    ticks += Math.ceil(0.20 * maxValue);
+    ticks += Math.round(0.20 * maxValue);
     yTicks.unshift((ticks + "-<br><br><br><br>"));
   }
   yTicks = yTicks.join("");
