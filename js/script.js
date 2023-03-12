@@ -185,7 +185,7 @@ element = "";
 
 console.log(drawBarChart(data, options, element));
 console.log(yTicks(data));
-console.log(ticks);
+//console.log(ticks);
 //data Input functions//
 
 
