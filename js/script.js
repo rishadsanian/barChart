@@ -51,28 +51,11 @@ var options = {
   yTitle: "Units",
   xTitle: "X-Axis",
   //Labels//
-  labels: ["a", "b", "c", "d", "e"],
+  labels: ["a", "b", "c"],
   //Value Position inside bar
   valuePos: "0%"
 };
 var element = "";
-
-//console.log(Math.max(data));
-//Rendering non-customizable //functions//
-
-
-
-
-//DataNormalization
-
-//MaxValue Determination
-
-//Max Y tick and Y ticks
-
-
-
-
-
 ////functions
 
 
@@ -85,13 +68,7 @@ var drawBarChart = function (data, options, element) {
 
 };
 
-var barWidth = "";
-var barHeight = "";
-var barType = ["Single value", "Multiple Value (Stacked)"];
-
-
-var barChart = {};
-
+//Y-Axis
 var yTicks = function (data) {
   var yTicks = ['0_'];
   var maxValue = Math.max(data);
@@ -103,9 +80,18 @@ var yTicks = function (data) {
   yTicks = yTicks.join("");
   options.maxYValue = ticks;
   return (yTicks);
-}
+};
 
-  ;
+//X-Axis
+
+
+var barWidth = "";
+var barHeight = "";
+var barType = ["Single value", "Multiple Value (Stacked)"];
+
+
+var barChart = {};
+
 /*`<div class="barChart">
 
  <div class="title">${options.titleName}</div>
