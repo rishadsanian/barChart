@@ -15,14 +15,14 @@
     <h1>Bar Chart Generator</h1>
   </header>
 
-  <p class ="chart">
+  <p class="chart">
 
   </p>
 
   <script>
     function drawBarChart(data, options, element) {
 
-      var data = (1, 2, 3);
+      var data = [1, 2, 3];
 
       var options = {
         //Title//
@@ -105,12 +105,11 @@
     <p class="value3">
       Value3
     </p>
-  </div>
+  </div>  
 </div>
 </div>
 `;
-      $('style').append('This is paragraph.')
-      $(element).after(chartText);
+      $(element).append(chartText);
     }
 
     $(document).ready(drawBarChart(data, options, element));

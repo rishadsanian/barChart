@@ -35,46 +35,47 @@ Font Colour
 
 /////////////////////DATA/////////////////////////////
 
-/////////single value
-//input variables
-var data = (1, 2, 3);
-var options = {
-  //Title//
-  titleName: "Title",
-  titleFontSize: "40px",
-  titleFontColour: "black",
-  //Bar//
-  barColour: "orange",
-  labelColour: "green",
-  barSpacing: "20%",
-  //Axes//
-  yTitle: "Units",
-  xTitle: "X-Axis",
-  //Labels//
-  labels: ["a", "b", "c"],
-  //Value Position inside bar
-  valuePos: "0%"
-};
-var element = "";
+
 ////functions
 
 
 
 
 var drawBarChart = function (data, options, element) {
-  var dataNorm = function (data) {
-    return data;
-  };
-
+  if (typeof data[0] === 'number') {
+    options.chartType = "Single";
+  } else if (typeof data[0] === 'object') {
+    options.chartType = "Stacked";
+  } else {
+    options.chartType = "Invalid Data";
+    alert("Invalid data");
+  }
+  return data;
 };
 
-//Y-Axis
+
+/////Y-Axis
 var yTicks = function (data) {
   var yTicks = ['0_'];
-  var maxValue = Math.max(data);
   var ticks = 0;
+
+  //MaxValue
+  var maxValue = 0;
+  if (options.chartType === 'Single') {
+    maxValue = Math.max.apply(null, data);
+  } else if (options.chartType === 'Stacked') {
+    for (i = 0; i < data.length; i++) {
+      for (j = 0; j < data[i].length; j++) {
+        if (data[i][j] > maxValue) {
+          maxValue = data[i][j];
+        }
+      }
+    }
+  } options.maxValue = maxValue;
+
+  ///Y Axis Ticks
   for (i = 0; i < 5; i++) {
-    ticks += Math.round(0.20 * maxValue);
+    ticks += Math.ceil(0.20 * options.maxValue);
     yTicks.unshift((ticks + "-<br><br><br><br>"));
   }
   yTicks = yTicks.join("");
@@ -83,11 +84,19 @@ var yTicks = function (data) {
 };
 
 //X-Axis
-
+var xAxisCssGrid = function (data) {
+  var xAxisHtml = "";
+  var xAxisCount = 0;
+  for (i = 0; i < data.length; i++) {
+    xAxisCount++;
+    xAxisHtml += "auto ";
+  }
+  options.xCount = xAxisCount;
+  return xAxisHtml;
+};
 
 var barWidth = "";
 var barHeight = "";
-var barType = ["Single value", "Multiple Value (Stacked)"];
 
 
 var barChart = {};
@@ -149,8 +158,8 @@ var columns = {};
  };
 
 }*/
-
-data = (1, 2, 3);
+data = [[1, 2, 3], [4, 5, 6]];
+//data = [1, 2, 3];
 options = {
   //Title//
   titleName: "Title",
@@ -172,8 +181,9 @@ element = "";
 
 console.log(drawBarChart(data, options, element));
 console.log(yTicks(data));
+console.log(xAxisCssGrid(data));
 console.log(options);
-//console.log(ticks);
+
 //data Input functions//
 
 
