@@ -42,6 +42,7 @@ Font Colour
 
 
 var drawBarChart = function (data, options, element) {
+  //Chart type
   if (typeof data[0] === 'number') {
     options.chartType = "Single";
   } else if (typeof data[0] === 'object') {
@@ -50,6 +51,13 @@ var drawBarChart = function (data, options, element) {
     options.chartType = "Invalid Data";
     alert("Invalid data");
   }
+
+//Label Validation
+
+
+
+
+
   return data;
 };
 
@@ -73,7 +81,7 @@ var yTicks = function (data) {
     }
   } options.maxValue = maxValue;
 
-  ///Y Axis Ticks
+  ///Y Axis Ticks - 5 ticks
   for (i = 0; i < 5; i++) {
     ticks += Math.ceil(0.20 * options.maxValue);
     yTicks.unshift((ticks + "-<br><br><br><br>"));
@@ -87,13 +95,24 @@ var yTicks = function (data) {
 var xAxisCssGrid = function (data) {
   var xAxisHtml = "";
   var xAxisCount = 0;
-  for (i = 0; i < data.length; i++) {
-    xAxisCount++;
-    xAxisHtml += "auto ";
+  if (options.chartType === 'Single') {
+    for (i = 0; i < data.length; i++) {
+      xAxisCount++;
+      xAxisHtml += "auto ";
+    }
+  } else if (options.chartType === 'Stacked') {
+    for (i = 0; i < data.length; i++) {
+      for (j = 0; j < data[i].length; j++) {
+        xAxisCount++;
+        xAxisHtml += "auto ";
+      }
+    }
   }
   options.xCount = xAxisCount;
   return xAxisHtml;
 };
+
+
 
 var barWidth = "";
 var barHeight = "";
@@ -102,30 +121,30 @@ var barHeight = "";
 var barChart = {};
 
 /*`<div class="barChart">
-
+ 
  <div class="title">${options.titleName}</div>
-
-
+ 
+ 
  <div class="yAxis">
-
+ 
    <div class="yTitle">Units</div>
-
+ 
    <div class="yTicks">5-<br><br><br><br>4-<br><br><br><br>3-<br><br><br><br>2-<br><br><br><br>1-<br><br><br><br>0_
    </div>
-
+ 
  </div>
-
+ 
  <div class="xAxis">
    <div class="label1">a</div>
    <div class="label2">b</div>
    <div class="label3">c</div>
    <div class="xTitle">X-Axis</div>
  </div>
-
  
-
+ 
+ 
  <div class="chartArea">
-
+ 
    <div class="bar1">
      <p class="value1">
        Value1
@@ -146,34 +165,35 @@ var barChart = {};
 `
 return chartText
 };
-
-
+ 
+ 
 var columns = {};
-
+ 
 /*for (var i = 0; i < data.length; i++) {
  (data[i]) = {
    color: "red",
    height: ((data[i]) / maxValue) * 100,
    label: labels[i]
  };
-
+ 
 }*/
-data = [[1, 2, 3], [4, 5, 6]];
-//data = [1, 2, 3];
+//data = [[1, 2, 3], [4, 5, 6]];
+data = [1, 2, 3];
 options = {
   //Title//
   titleName: "Title",
   titleFontSize: "40px",
   titleFontColour: "black",
+  //Labels//
+  labels: ["a", "b", "c"],
   //Bar//
-  barColour: "orange",
+  barColour: ["tomato", "orange", "dodgerblue"],
   labelColour: "green",
   barSpacing: "20%",
   //Axes//
   yTitle: "Units",
   xTitle: "X-Axis",
-  //Labels//
-  labels: ["a", "b", "c"],
+
   //Value Position inside bar
   valuePos: "0%"
 };
