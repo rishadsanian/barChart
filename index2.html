@@ -112,11 +112,7 @@
         return xAxisHtml;
       };
 
-      var barWidth = "";
-      var barHeight = "";
-      var chartText2 = "";
-
-      // add bar chart to element provided
+      // JQUERY add bar chart to element provided
       var barChart = $(element).append("<div></div>").addClass("barChart");
 
       //title
@@ -194,8 +190,8 @@
       $('.title').css({
         'grid-area': '1/1/span 1/span 11',
         'text-align': 'center',
-        'font-size': '40px',
-        'color': 'black'
+        'font-size': `${options.titleFontSize}`,
+        'color': `${options.titleFontColour}`
       });
 
       $('.yAxis').css({
@@ -219,9 +215,9 @@
         "grid-area": "12/2/span 2 /span 10",
         "text-align": "center",
         "display": "grid",
-        "grid-template-columns": "auto auto auto",
+        "grid-template-columns": `${options.xAxisHtml}`,
         "grid-template-rows": "auto auto",
-        "grid-gap": "20%",
+        "grid-gap": `${options.barSpacing}`,
         "padding-left": "10%",
         "padding-right": "10%"
       })
@@ -230,6 +226,18 @@
         "background-color": "white",
         "grid-area": "2/1/span 2/span 3",
         "position": "center",
+      })
+
+      $('.chartArea').css({
+        "position": "relative",
+        "grid-area": "2/2/span 10/span 10",
+        "grid-gap": `${options.barSpacing}`,
+        "padding-left": "10%",
+        "padding-right": "10%",
+        "background-color": "whitesmoke",
+        "border-style": "none none groove groove",
+        "display": "grid",
+        "grid-template-columns": `${options.xAxisHtml}`
       })
 
 

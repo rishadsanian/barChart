@@ -125,6 +125,7 @@ body {
 }
 
 .value1 {
+  display: flexbox;
   position: relative;
   top:0%;
 }

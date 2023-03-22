@@ -37,7 +37,7 @@
         yTitle: "Units",
         xTitle: "X-Axis",
         //Labels//
-        labels: ["a", "b", "c", "d", "e"],
+        labels: ["a", "b", "c"],
         //Value Position inside bar
         valuePos: "0%"
       };
@@ -47,20 +47,50 @@
 
 
       ///Rendering////
+      //Chart type
+      if (typeof data[0] === 'number') {
+        options.chartType = "Single";
+      } else if (typeof data[0] === 'object') {
+        options.chartType = "Stacked";
+      } else {
+        options.chartType = "Invalid Data";
+        alert("Invalid data");
+      }
       //Y-Ticks
       var yTicks = function (data) {
         var yTicks = ['0_'];
-        var maxValue = Math.max(data);
         var ticks = 0;
+
+        //MaxValue
+        var maxValue = 0;
+        if (options.chartType === 'Single') {
+          maxValue = Math.max.apply(null, data);
+        } else if (options.chartType === 'Stacked') {
+          for (i = 0; i < data.length; i++) {
+            for (j = 0; j < data[i].length; j++) {
+              if (data[i][j] > maxValue) {
+                maxValue = data[i][j];
+              }
+            }
+          }
+        } options.maxValue = maxValue;
+
+        ///Y Axis Ticks - 5 ticks
         for (i = 0; i < 5; i++) {
-          ticks += Math.round(0.20 * maxValue);
+          ticks += Math.ceil(0.20 * options.maxValue);
           yTicks.unshift((ticks + "-<br><br><br><br>"));
         }
         yTicks = yTicks.join("");
         options.maxYValue = ticks;
         return (yTicks);
-      }
+      };
+
       //Labels
+      //Label Validation
+
+      if (options.labels.length !== options.xCount) {
+        alert("Update Labels");
+      }
 
 
       var barWidth = "";

@@ -52,13 +52,14 @@ var drawBarChart = function (data, options, element) {
     alert("Invalid data");
   }
 
-//Label Validation
+  /*Label Validation
+
+  if (options.labels.length !== options.xCount) {
+    alert("Update Labels");
+  }
+*/
 
 
-
-
-
-  return data;
 };
 
 
@@ -109,6 +110,7 @@ var xAxisCssGrid = function (data) {
     }
   }
   options.xCount = xAxisCount;
+  options.xAxisHtml = xAxisHtml;
   return xAxisHtml;
 };
 
@@ -203,7 +205,7 @@ console.log(drawBarChart(data, options, element));
 console.log(yTicks(data));
 console.log(xAxisCssGrid(data));
 console.log(options);
-
+console.log(options.labels.length !== options.xCount);
 //data Input functions//
 
 
