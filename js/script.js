@@ -89,6 +89,7 @@ var yTicks = function (data) {
   }
   yTicks = yTicks.join("");
   options.maxYValue = ticks;
+  options.yTicks = yTicks;
   return (yTicks);
 };
 
@@ -110,17 +111,25 @@ var xAxisCssGrid = function (data) {
     }
   }
   options.xCount = xAxisCount;
-  options.xAxisHtml = xAxisHtml;
+  options.xAxisHtml = xAxisHtml.slice(0, -1);
   return xAxisHtml;
+};
+
+//X Labels
+
+var labels = function (options) {
+  var labelsHtml = "";
+  for (i = 0; i < options.labels.length; i++) {
+    labelsContent = "var label" + (i + 1) + " = $('<div>').addClass('label" + (i + 1) + "').text('" + options.labels[i] + "')";
+    labelsCss = '.css({"position": "center", "color": "' + (options.labelColour[i]) + '"';
+    labelsHtml = labelsHtml + labelsContent + labelsCss;
+  }
+  options.labelsHtml = labelsHtml;
+  return labelsHtml;
 };
 
 
 
-var barWidth = "";
-var barHeight = "";
-
-
-var barChart = {};
 
 /*`<div class="barChart">
  
@@ -190,7 +199,7 @@ options = {
   labels: ["a", "b", "c"],
   //Bar//
   barColour: ["tomato", "orange", "dodgerblue"],
-  labelColour: "green",
+  labelColour: ["tomato", "orange", "dodgerblue"],
   barSpacing: "20%",
   //Axes//
   yTitle: "Units",
@@ -204,6 +213,7 @@ element = "";
 console.log(drawBarChart(data, options, element));
 console.log(yTicks(data));
 console.log(xAxisCssGrid(data));
+console.log(labels(options));
 console.log(options);
 console.log(options.labels.length !== options.xCount);
 //data Input functions//

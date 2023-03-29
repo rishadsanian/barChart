@@ -26,24 +26,26 @@
 
   <script>
 
+    //User Input
 
-    var data = [1, 2, 3];
+    var data = [1, 2, 3, 4, 5];
 
-    var options = {
+    options = {
       //Title//
       titleName: "Title",
       titleFontSize: "40px",
       titleFontColour: "black",
+      //Labels//
+      labels: ["a", "b", "c", "d", "e"],
+      labelColour: ["tomato", "orange", "dodgerblue", "yellow", "black"],
       //Bar//
-      barColour: "orange",
-      labelColour: "green",
-      barSpacing: "20%",
+      barColour: ["tomato", "orange", "dodgerblue", "yellow", "black"],
+      barSpacing: "10%",
       //Axes//
       yTitle: "Units",
       xTitle: "X-Axis",
-      //Labels//
-      labels: ["a", "b", "c",],
-      //Value Position inside bar
+
+      //Value Position inside bar (top, bottom, or center)
       valuePos: "0%"
     };
 
@@ -62,12 +64,13 @@
       }
 
       ///Rendering////
+
       /////Y-Axis
       var yTicks = function (data) {
         var yTicks = ['0_'];
         var ticks = 0;
 
-        //MaxValue
+        // MaxValue -- add functionality to determine any negative numbers and max value under one
         var maxValue = 0;
         if (options.chartType === 'Single') {
           maxValue = Math.max.apply(null, data);
@@ -81,17 +84,18 @@
           }
         } options.maxValue = maxValue;
 
-        ///Y Axis Ticks - 5 ticks
+        // Y Axis Ticks - 5 ticks
         for (i = 0; i < 5; i++) {
           ticks += Math.ceil(0.20 * options.maxValue);
           yTicks.unshift((ticks + "-<br><br><br><br>"));
         }
         yTicks = yTicks.join("");
         options.maxYValue = ticks;
+        options.yTicks = yTicks;
         return (yTicks);
       };
 
-      //X-Axis
+      // X-Axis
       var xAxisCssGrid = function (data) {
         var xAxisHtml = "";
         var xAxisCount = 0;
@@ -109,140 +113,179 @@
           }
         }
         options.xCount = xAxisCount;
+        options.xAxisHtml = xAxisHtml;
         return xAxisHtml;
       };
 
-      // JQUERY add bar chart to element provided
-      var barChart = $(element).append("<div></div>").addClass("barChart");
-
-      //title
-      var title = $(".barChart").append(`<div>${options.titleName}</div>`).addClass("title")
-
-      // Y-Axis elements
-      var yAxis = $(".barChart").append("<div></div>").addClass("yAxis");
-
-      var yTitle = $(".yAxis").append(`<div>${options.yTitle}</div>`).addClass("yTitle");
-
-      var yTicks = $(".yAxis").append(`<div>${yTicks(data)}</div>`).addClass("yTicks");
+      //Labels Html 
 
 
+      ////Jquery Dom Manipulation plus css
+
+      // barChart container 
+      var barChart = $('<div>')
+        .addClass('barChart')
+        .css({
+          'display': 'grid',
+          'grid-template-columns': 'auto auto auto auto auto',
+          'grid-gap': '0px',
+          'padding': '5%',
+          'background-color': 'white',
+          'height': '80%',
+          'width': '80%',
+          'font-family': 'inherit'
+        });
+
+      // Title
+      var title = $('<div>')
+        .addClass('title')
+        .text(options.titleName)
+        .css({
+          'grid-area': '1/1/span 1/span 11',
+          'text-align': 'center',
+          'font-size': `${options.titleFontSize}`,
+          'color': `${options.titleFontColour}`
+        });
 
 
-      var xAxis = ""
-      var chartArea = ""
-      var chartText = `<div class="barChart">
+      // Y-Axis, Y Title, Ticks
+      var yAxis = $('<div>')
+        .addClass('yAxis')
+        .css({
+          'position': 'relative',
+          'grid-area': '2/1/span 10 /span 1',
+          'text-align': 'right'
+        });
 
-<div class="title">${options.titleName}</div>
+      var yTitle = $('<div>')
+        .addClass('yTitle')
+        .text(options.yTitle)
+        .css({
+          'text-align': 'center'
+        });
 
+      var yTicks = $('<div>')
+        .addClass('yTicks')
+        .html(yTicks(data))
+        .css({
+          'position': 'relative',
+          'right': '0',
+          'bottom': '0%'
+        });
 
-<div class="yAxis">
+      yAxis.append(yTitle, yTicks);
 
-  <div class="yTitle">${options.yTitle}</div>
+      // X-Axis, Labels, Title) create the x-axis element and its child elements -- need to make function to generate labels
+      var xAxis = $('<div>')
+        .addClass('xAxis')
+        .css({
+          "position": "relative",
+          "grid-area": "12/2/span 2 /span 10",
+          "text-align": "center",
+          "display": "grid",
+          "grid-template-columns": xAxisCssGrid(data),
+          "grid-template-rows": "auto auto",
+          "grid-gap": options.barSpacing,
+          "padding-left": "10%",
+          "padding-right": "10%"
+        })
 
-  <div class="yTicks">${yTicks(data)}
-  </div>
+      // Labels
+      for (i = 0; i < options.labels.length; i++) {
+        xAxis.append($('<div>')
+          .addClass("label" + (i + 1))
+          .text(options.labels[i])
+          .css({
+            "position": "center",
+            "color": options.labelColour[i]
+          })
+        )
+      }
 
-</div>
+      var xTitle = $('<div>')
+        .addClass('xTitle')
+        .text(options.xTitle)
+        .css({
+          "background-color": "white",
+          "grid-area": "2/1/span 2/span 3",//adjust grid area as function
+          "position": "center"
+        })
 
-<div class="xAxis">
-  <div class="label1">a</div>
-  <div class="label2">b</div>
-  <div class="label3">c</div>
-  <div class="xTitle">${options.xTitle}</div>
-</div>
+      xAxis.append(xTitle);
 
-
-
-<div class="chartArea">
-
-  <div class="bar1">
-    <p class="value1">
-      Value1
-    </p>
-  </div>
-  <div class="bar2">
-    <p class="value2">
-      Value2
-    </p>
-  </div>
-  <div class="bar3">
-    <p class="value3">
-      Value3
-    </p>
-  </div>
-</div>
-</div>
-`;
-
-      //CSS styling
-
-      $('.barChart').css({
-        'display': 'grid',
-        'grid-template-columns': 'auto auto auto auto auto',
-        'grid-gap': '0px',
-        'padding': '5%',
-        'background-color': 'white',
-        'height': '80%',
-        'width': '80%',
-        'font-family': 'inherit'
-      });
-
-      $('.title').css({
-        'grid-area': '1/1/span 1/span 11',
-        'text-align': 'center',
-        'font-size': `${options.titleFontSize}`,
-        'color': `${options.titleFontColour}`
-      });
-
-      $('.yAxis').css({
-        'position': 'relative',
-        'grid-area': '2/1/span 10 /span 1',
-        'text-align': 'right'
-      });
-
-      $('.yTitle').css({
-        'text-align': 'center'
-      });
-
-      $('.yTicks').css({
-        'position': 'relative',
-        'right': '0',
-        'bottom': '0%'
-      });
-
-      $('.xAxis').css({
-        "position": "relative",
-        "grid-area": "12/2/span 2 /span 10",
-        "text-align": "center",
-        "display": "grid",
-        "grid-template-columns": `${options.xAxisHtml}`,
-        "grid-template-rows": "auto auto",
-        "grid-gap": `${options.barSpacing}`,
-        "padding-left": "10%",
-        "padding-right": "10%"
-      })
-
-      $('.xTitle').css({
-        "background-color": "white",
-        "grid-area": "2/1/span 2/span 3",
-        "position": "center",
-      })
-
-      $('.chartArea').css({
+      // Chart Area (Bars and Values) create the chart area element and its child elements  -- need to make function to generate number of bars and values
+      var chartArea = $('<div>').addClass('chartArea').css({
         "position": "relative",
         "grid-area": "2/2/span 10/span 10",
-        "grid-gap": `${options.barSpacing}`,
+        "grid-gap": options.barSpacing,
         "padding-left": "10%",
         "padding-right": "10%",
         "background-color": "whitesmoke",
         "border-style": "none none groove groove",
         "display": "grid",
-        "grid-template-columns": `${options.xAxisHtml}`
-      })
+        "grid-template-columns": xAxisCssGrid(data)
+      });
 
+      var bar1 = $('<div>').addClass('bar1').css({
+        "position": "absolute",
+        "bottom": "0",
+        "grid-area": "1/1/span 1/span 1",
+        "background-color": "tomato",
 
-      $('style').append('This is paragraph.')
-      return chartText2;
+        "text-align": "center",
+        "height": "20%",
+        "width": "100%",
+      });
+      var value1 = $('<p>').addClass('value1').text('Value1').css({
+        "display": "flexbox",
+        "position": "relative",
+        "top": "0%",
+        "transform": "translateY(-50%)",
+      });
+      bar1.append(value1);
+
+      var bar2 = $('<div>').addClass('bar2').css({
+        "position": "absolute",
+        "bottom": "0",
+        "grid-area": "1/2/span 1/span 1",
+        "background-color": "orange",
+        "text-align": "center",
+        "height": "40%",
+        "width": "100%",
+      });
+      var value2 = $('<p>').addClass('value2').text('Value2').css({
+        "display": "flexbox",
+        "position": "relative",
+        "top": "0%",
+        "transform": "translateY(-50%)",
+      });
+      bar2.append(value2);
+
+      var bar3 = $('<div>').addClass('bar3').css({
+        "position": "absolute",
+        "bottom": "0",
+        "grid-area": "1/3/span 1/span 1",
+        "background-color": "dodgerblue",
+        "text-align": "center",
+        "height": "60%",
+        "width": "100%", //width relative to 
+      });
+      var value3 = $('<p>').addClass('value3').text('Value3').css({
+        "display": "flexbox",
+        "position": "relative",
+        "top": "0%",
+        "transform": "translateY(-50%)",
+      });
+      bar3.append(value3);
+
+      chartArea.append(bar1, bar2, bar3);
+
+      // append all the elements to the barChart container element
+      barChart.append(title, yAxis, xAxis, chartArea);
+
+      // append the barChart container element to the DOM
+      $(element).append(barChart);
+
     }
 
     $(document).ready(drawBarChart(data, options, element));
