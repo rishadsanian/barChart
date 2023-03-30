@@ -128,8 +128,7 @@ var labels = function (options) {
   return labelsHtml;
 };
 
-
-
+//bar Height Single
 
 /*`<div class="barChart">
  

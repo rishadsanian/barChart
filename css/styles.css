@@ -91,6 +91,7 @@ body {
   border-style: none none groove groove;
   display: grid;
   grid-template-columns: auto auto auto;
+  align-items:baseline
 }
 
 /*columns */

@@ -24,36 +24,47 @@
 
   </p>
 
+
+
   <script>
 
-    //User Input
+    //User Input // FUTURE FEAUTURES - MULTIPLE/STACKED BARS / NEGATIVE NUMBERS / DECIMALS FOR MAX VALUE UNDER 1 / ANIMATION /  MORE EFFECIENT NORMALIZATION /ERROR DISPLAYS
 
-    var data = [1, 2, 3, 4, 5];
+    //USER DATA
+    var data = [2, 5, 9, 3, 8];
 
     options = {
+
       //Title//
       titleName: "Title",
       titleFontSize: "40px",
       titleFontColour: "black",
+
       //Labels//
       labels: ["a", "b", "c", "d", "e"],
-      labelColour: ["tomato", "orange", "dodgerblue", "yellow", "black"],
-      //Bar//
-      barColour: ["tomato", "orange", "dodgerblue", "yellow", "black"],
+      labelColour: ["tomato", "orange", "dodgerblue", "brown", "green"],
+
+      //Bar// FUTURE FEATURES - ANIMATION / AUTO BARSPACING OPTION
+      barColour: ["tomato", "orange", "dodgerblue", "brown", "green"],
       barSpacing: "10%",
-      //Axes//
+
+      //Axes// FUTURE FEATURES - AXES LINE COLOUR AND FONT COLOUR / FONT STYLE//CHART AREA BACKGROUND COLOUR
       yTitle: "Units",
       xTitle: "X-Axis",
 
-      //Value Position inside bar (top, bottom, or center)
-      valuePos: "0%"
+      //Position of value inside bar (for top - "baseline", for bottom - "end", and for middle - "center") // FUTURE FEATURES - HIDE VALUES
+      valuePos: "center"
     };
 
+    //Chart Placement
     var element = ".chart";
+
+
+    //Bar Chart Function
 
     function drawBarChart(data, options, element) {
 
-      //Chart type
+      //Chart type////FUTURE FEATURE - MORE ROBUST DATA ERROR DETECTION
       if (typeof data[0] === 'number') {
         options.chartType = "Single";
       } else if (typeof data[0] === 'object') {
@@ -70,7 +81,7 @@
         var yTicks = ['0_'];
         var ticks = 0;
 
-        // MaxValue -- add functionality to determine any negative numbers and max value under one
+        // MaxValue // FUTURE FEATURE add functionality to determine any negative numbers and max value under one
         var maxValue = 0;
         if (options.chartType === 'Single') {
           maxValue = Math.max.apply(null, data);
@@ -84,7 +95,8 @@
           }
         } options.maxValue = maxValue;
 
-        // Y Axis Ticks - 5 ticks
+        // Y Axis Ticks - 5 ticks // FUTURE FEATURE - ADJUST NUMBER OF TICKS 
+
         for (i = 0; i < 5; i++) {
           ticks += Math.ceil(0.20 * options.maxValue);
           yTicks.unshift((ticks + "-<br><br><br><br>"));
@@ -117,9 +129,6 @@
         return xAxisHtml;
       };
 
-      //Labels Html 
-
-
       ////Jquery Dom Manipulation plus css
 
       // barChart container 
@@ -143,8 +152,8 @@
         .css({
           'grid-area': '1/1/span 1/span 11',
           'text-align': 'center',
-          'font-size': `${options.titleFontSize}`,
-          'color': `${options.titleFontColour}`
+          'font-size': options.titleFontSize,
+          'color': options.titleFontColour
         });
 
 
@@ -175,7 +184,7 @@
 
       yAxis.append(yTitle, yTicks);
 
-      // X-Axis, Labels, Title) create the x-axis element and its child elements -- need to make function to generate labels
+      // X-Axis, Labels, Title
       var xAxis = $('<div>')
         .addClass('xAxis')
         .css({
@@ -202,18 +211,21 @@
         )
       }
 
+      //X-Axis Title
+
       var xTitle = $('<div>')
         .addClass('xTitle')
         .text(options.xTitle)
         .css({
           "background-color": "white",
-          "grid-area": "2/1/span 2/span 3",//adjust grid area as function
+          "grid-area": "2/1/span 2/span " + options.xCount,
           "position": "center"
         })
 
       xAxis.append(xTitle);
 
-      // Chart Area (Bars and Values) create the chart area element and its child elements  -- need to make function to generate number of bars and values
+      // Chart Area (Bars and Values) 
+
       var chartArea = $('<div>').addClass('chartArea').css({
         "position": "relative",
         "grid-area": "2/2/span 10/span 10",
@@ -226,68 +238,35 @@
         "grid-template-columns": xAxisCssGrid(data)
       });
 
-      var bar1 = $('<div>').addClass('bar1').css({
-        "position": "absolute",
-        "bottom": "0",
-        "grid-area": "1/1/span 1/span 1",
-        "background-color": "tomato",
+      //TODO - STACKED BARS
 
-        "text-align": "center",
-        "height": "20%",
-        "width": "100%",
-      });
-      var value1 = $('<p>').addClass('value1').text('Value1').css({
-        "display": "flexbox",
-        "position": "relative",
-        "top": "0%",
-        "transform": "translateY(-50%)",
-      });
-      bar1.append(value1);
+      //bars single
+      for (i = 0; i < options.xCount; i++) {
+        chartArea.append($('<div>')
+          .addClass("bar" + (i + 1))
+          .text(data[i])
+          .css({
+            "position": "absolute",
+            "bottom": "0",
+            "grid-area": "1/" + [i + 1] + "/span 1/span 1",
+            "background-color": options.barColour[i],
+            "height": ((data[i] / options.maxYValue) * 100) + "%",
+            "width": "100%",
+            "display": "flex",
+            "justify-content": "center",
+            "align-items": options.valuePos
+          })
+        )
+      }
 
-      var bar2 = $('<div>').addClass('bar2').css({
-        "position": "absolute",
-        "bottom": "0",
-        "grid-area": "1/2/span 1/span 1",
-        "background-color": "orange",
-        "text-align": "center",
-        "height": "40%",
-        "width": "100%",
-      });
-      var value2 = $('<p>').addClass('value2').text('Value2').css({
-        "display": "flexbox",
-        "position": "relative",
-        "top": "0%",
-        "transform": "translateY(-50%)",
-      });
-      bar2.append(value2);
-
-      var bar3 = $('<div>').addClass('bar3').css({
-        "position": "absolute",
-        "bottom": "0",
-        "grid-area": "1/3/span 1/span 1",
-        "background-color": "dodgerblue",
-        "text-align": "center",
-        "height": "60%",
-        "width": "100%", //width relative to 
-      });
-      var value3 = $('<p>').addClass('value3').text('Value3').css({
-        "display": "flexbox",
-        "position": "relative",
-        "top": "0%",
-        "transform": "translateY(-50%)",
-      });
-      bar3.append(value3);
-
-      chartArea.append(bar1, bar2, bar3);
-
-      // append all the elements to the barChart container element
+      // append to barChart
       barChart.append(title, yAxis, xAxis, chartArea);
 
-      // append the barChart container element to the DOM
+      // append to user inputed element
       $(element).append(barChart);
-
     }
 
+    //Execute function when page loads
     $(document).ready(drawBarChart(data, options, element));
 
   </script>
