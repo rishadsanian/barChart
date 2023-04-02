@@ -2,7 +2,6 @@
 <html>
 
 <head>
-  <script src="js/script.js"></script>
   <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>-->
   <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
     crossorigin="anonymous"></script>
@@ -31,7 +30,7 @@
     //User Input // FUTURE FEAUTURES - MULTIPLE/STACKED BARS / NEGATIVE NUMBERS / DECIMALS FOR MAX VALUE UNDER 1 / ANIMATION /  MORE EFFECIENT NORMALIZATION /ERROR DISPLAYS
 
     //USER DATA
-    var data = [-2, 5, 9, 3, 8];
+    var data = [2, 5, 9, 3, 8];
 
     options = {
 
@@ -53,7 +52,7 @@
       xTitle: "X-Axis",
 
       //Position of value inside bar (for top - "baseline", for bottom - "end", and for middle - "center") // FUTURE FEATURES - HIDE VALUES
-      valuePos: "center"
+      valuePos: "baseline"
     };
 
     //Chart Placement
@@ -74,16 +73,14 @@
         alert("Invalid data");
       }
 
-
       ///Rendering////
 
-
-
-      /////Y-Axis //FUTURE FEATURE add functionality to determine any negative numbers and max value under one
-
+      /////Y-Axis
       var yTicks = function (data) {
+        var yTicks = ['0_'];
+        var ticks = 0;
 
-        // MaxValue //
+        // MaxValue // FUTURE FEATURE add functionality to determine any negative numbers and max value under one
         var maxValue = 0;
         if (options.chartType === 'Single') {
           maxValue = Math.max.apply(null, data);
@@ -111,24 +108,10 @@
           }
         } options.minValue = minValue;
 
-        //Determine the start value of y axis based on if there are any negative numbers and for  max value under one
-
-        if (options.minValue < 0) {
-          ticks = Math.floor(0.20 * options.minValue);
-
-        } else if (options.minValue >= 0) {
-          ticks = 0;
-
-        }
-
-        var yTicks = [ticks + '_'];
-
-        // Y Axis Ticks - 5 ticks // FUTURE FEATURE - ADJUST NUMBER OF TICKS
-
-        //Determine tick increment operator
+        // Y Axis Ticks - 5 ticks // FUTURE FEATURE - ADJUST NUMBER OF TICKS 
 
         for (i = 0; i < 5; i++) {
-          ticks += Math.ceil(0.20 * (options.maxValue - options.minValue));
+          ticks += Math.ceil(0.20 * options.maxValue);
           yTicks.unshift((ticks + "-<br><br><br><br>"));
         }
         yTicks = yTicks.join("");
@@ -136,7 +119,6 @@
         options.yTicks = yTicks;
         return (yTicks);
       };
-
 
       // X-Axis
       var xAxisCssGrid = function (data) {
@@ -161,8 +143,6 @@
       };
 
       ////Jquery Dom Manipulation plus css
-      // animate the bars
-
 
       // barChart container 
       var barChart = $('<div>')
@@ -274,8 +254,9 @@
       //TODO - STACKED BARS
 
       //bars single
-      if (options.chartType = "Single") {
+      
         for (i = 0; i < options.xCount; i++) {
+          if (chartType = "Single"){
           chartArea.append($('<div>')
             .addClass("bar" + (i + 1))
             .text(data[i])
@@ -291,10 +272,10 @@
               "align-items": options.valuePos
             })
           )
+          }
         }
-      };
-
-
+        //bars stacked
+      
 
       // append to barChart
       barChart.append(title, yAxis, xAxis, chartArea);
@@ -307,6 +288,3 @@
     $(document).ready(drawBarChart(data, options, element));
 
   </script>
-</body>
-
-</html>

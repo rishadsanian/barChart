@@ -98,13 +98,6 @@ var yTicks = function (data) {
 
   //Determine the start value of y axis based on if there are any negative numbers and for  max value under one
 
-  if (options.minValue < 0) {
-    ticks = Math.floor(0.20 * options.minValue);
-    yTicks = [ticks + '_'];
-  } else if (options.minValue >= 0) {
-    ticks = 0;
-    yTicks = ['0_'];
-  }
 
   // Y Axis Ticks - 5 ticks // FUTURE FEATURE - ADJUST NUMBER OF TICKS
 
@@ -132,6 +125,7 @@ var xAxisCssGrid = function (data) {
     for (i = 0; i < data.length; i++) {
       xAxisCount++;
       xAxisHtml += "auto ";
+      options.ySpan = 1;
     }
   } else if (options.chartType === 'Stacked') {
     for (i = 0; i < data.length; i++) {
