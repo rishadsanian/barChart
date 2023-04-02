@@ -94,6 +94,20 @@
           }
         } options.maxValue = maxValue;
 
+        //MinValue
+        var minValue = 0;
+        if (options.chartType === 'Single') {
+          minValue = Math.min.apply(null, data);
+        } else if (options.chartType === 'Stacked') {
+          for (i = 0; i < data.length; i++) {
+            for (j = 0; j < data[i].length; j++) {
+              if (data[i][j] < minValue) {
+                minValue = data[i][j];
+              }
+            }
+          }
+        } options.minValue = minValue;
+
         // Y Axis Ticks - 5 ticks // FUTURE FEATURE - ADJUST NUMBER OF TICKS 
 
         for (i = 0; i < 5; i++) {

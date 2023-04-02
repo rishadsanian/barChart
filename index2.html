@@ -31,7 +31,7 @@
     //User Input // FUTURE FEAUTURES - MULTIPLE/STACKED BARS / NEGATIVE NUMBERS / DECIMALS FOR MAX VALUE UNDER 1 / ANIMATION /  MORE EFFECIENT NORMALIZATION /ERROR DISPLAYS
 
     //USER DATA
-    var data = [2, 5, 9, 3, 8];
+    var data = [-2, 5, 9, 3, 8];
 
     options = {
 
@@ -74,14 +74,16 @@
         alert("Invalid data");
       }
 
+
       ///Rendering////
 
-      /////Y-Axis
-      var yTicks = function (data) {
-        var yTicks = ['0_'];
-        var ticks = 0;
 
-        // MaxValue // FUTURE FEATURE add functionality to determine any negative numbers and max value under one
+
+      /////Y-Axis //FUTURE FEATURE add functionality to determine any negative numbers and max value under one
+
+      var yTicks = function (data) {
+
+        // MaxValue //
         var maxValue = 0;
         if (options.chartType === 'Single') {
           maxValue = Math.max.apply(null, data);
@@ -95,10 +97,38 @@
           }
         } options.maxValue = maxValue;
 
-        // Y Axis Ticks - 5 ticks // FUTURE FEATURE - ADJUST NUMBER OF TICKS 
+        //MinValue
+        var minValue = 0;
+        if (options.chartType === 'Single') {
+          minValue = Math.min.apply(null, data);
+        } else if (options.chartType === 'Stacked') {
+          for (i = 0; i < data.length; i++) {
+            for (j = 0; j < data[i].length; j++) {
+              if (data[i][j] < minValue) {
+                minValue = data[i][j];
+              }
+            }
+          }
+        } options.minValue = minValue;
+
+        //Determine the start value of y axis based on if there are any negative numbers and for  max value under one
+
+        if (options.minValue < 0) {
+          ticks = Math.floor(0.20 * options.minValue);
+
+        } else if (options.minValue >= 0) {
+          ticks = 0;
+
+        }
+
+        var yTicks = [ticks + '_'];
+
+        // Y Axis Ticks - 5 ticks // FUTURE FEATURE - ADJUST NUMBER OF TICKS
+
+        //Determine tick increment operator
 
         for (i = 0; i < 5; i++) {
-          ticks += Math.ceil(0.20 * options.maxValue);
+          ticks += Math.ceil(0.20 * (options.maxValue - options.minValue));
           yTicks.unshift((ticks + "-<br><br><br><br>"));
         }
         yTicks = yTicks.join("");
@@ -106,6 +136,7 @@
         options.yTicks = yTicks;
         return (yTicks);
       };
+
 
       // X-Axis
       var xAxisCssGrid = function (data) {
@@ -130,6 +161,8 @@
       };
 
       ////Jquery Dom Manipulation plus css
+      // animate the bars
+
 
       // barChart container 
       var barChart = $('<div>')
@@ -241,23 +274,27 @@
       //TODO - STACKED BARS
 
       //bars single
-      for (i = 0; i < options.xCount; i++) {
-        chartArea.append($('<div>')
-          .addClass("bar" + (i + 1))
-          .text(data[i])
-          .css({
-            "position": "absolute",
-            "bottom": "0",
-            "grid-area": "1/" + [i + 1] + "/span 1/span 1",
-            "background-color": options.barColour[i],
-            "height": ((data[i] / options.maxYValue) * 100) + "%",
-            "width": "100%",
-            "display": "flex",
-            "justify-content": "center",
-            "align-items": options.valuePos
-          })
-        )
-      }
+      if (options.chartType = "Single") {
+        for (i = 0; i < options.xCount; i++) {
+          chartArea.append($('<div>')
+            .addClass("bar" + (i + 1))
+            .text(data[i])
+            .css({
+              "position": "absolute",
+              "bottom": "0",
+              "grid-area": "1/" + [i + 1] + "/span 1/span 1",
+              "background-color": options.barColour[i],
+              "height": ((data[i] / options.maxYValue) * 100) + "%",
+              "width": "100%",
+              "display": "flex",
+              "justify-content": "center",
+              "align-items": options.valuePos
+            })
+          )
+        }
+      };
+
+
 
       // append to barChart
       barChart.append(title, yAxis, xAxis, chartArea);
@@ -270,3 +307,6 @@
     $(document).ready(drawBarChart(data, options, element));
 
   </script>
+</body>
+
+</html>

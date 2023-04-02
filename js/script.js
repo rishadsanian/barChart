@@ -62,13 +62,13 @@ var drawBarChart = function (data, options, element) {
 
 };
 
+/////Y-Axis //FUTURE FEATURE add functionality to determine any negative numbers and max value under one
 
-/////Y-Axis
 var yTicks = function (data) {
   var yTicks = ['0_'];
   var ticks = 0;
 
-  //MaxValue
+  // MaxValue //
   var maxValue = 0;
   if (options.chartType === 'Single') {
     maxValue = Math.max.apply(null, data);
@@ -82,9 +82,40 @@ var yTicks = function (data) {
     }
   } options.maxValue = maxValue;
 
-  ///Y Axis Ticks - 5 ticks
+  //MinValue
+  var minValue = 0;
+  if (options.chartType === 'Single') {
+    minValue = Math.min.apply(null, data);
+  } else if (options.chartType === 'Stacked') {
+    for (i = 0; i < data.length; i++) {
+      for (j = 0; j < data[i].length; j++) {
+        if (data[i][j] < minValue) {
+          minValue = data[i][j];
+        }
+      }
+    }
+  } options.minValue = minValue;
+
+  //Determine the start value of y axis based on if there are any negative numbers and for  max value under one
+
+  if (options.minValue < 0) {
+    ticks = Math.floor(0.20 * options.minValue);
+    yTicks = [ticks + '_'];
+  } else if (options.minValue >= 0) {
+    ticks = 0;
+    yTicks = ['0_'];
+  }
+
+  // Y Axis Ticks - 5 ticks // FUTURE FEATURE - ADJUST NUMBER OF TICKS
+
+  //Determine tick increment operator
+
   for (i = 0; i < 5; i++) {
-    ticks += Math.ceil(0.20 * options.maxValue);
+    if (ticks < 0) {
+      ticks -= Math.ceil(0.20 * options.maxValue);
+    } else if (ticks >= 0) {
+      ticks += Math.ceil(0.20 * options.maxValue);
+    }
     yTicks.unshift((ticks + "-<br><br><br><br>"));
   }
   yTicks = yTicks.join("");
@@ -130,64 +161,9 @@ var labels = function (options) {
 
 //bar Height Single
 
-/*`<div class="barChart">
- 
- <div class="title">${options.titleName}</div>
- 
- 
- <div class="yAxis">
- 
-   <div class="yTitle">Units</div>
- 
-   <div class="yTicks">5-<br><br><br><br>4-<br><br><br><br>3-<br><br><br><br>2-<br><br><br><br>1-<br><br><br><br>0_
-   </div>
- 
- </div>
- 
- <div class="xAxis">
-   <div class="label1">a</div>
-   <div class="label2">b</div>
-   <div class="label3">c</div>
-   <div class="xTitle">X-Axis</div>
- </div>
- 
- 
- 
- <div class="chartArea">
- 
-   <div class="bar1">
-     <p class="value1">
-       Value1
-     </p>
-   </div>
-   <div class="bar2">
-     <p class="value2">
-       Value2
-     </p>
-   </div>
-   <div class="bar3">
-     <p class="value3">
-       Value3
-     </p>
-   </div>
- </div>
-</div>
-`
-return chartText
-};
- 
- 
-var columns = {};
- 
-/*for (var i = 0; i < data.length; i++) {
- (data[i]) = {
-   color: "red",
-   height: ((data[i]) / maxValue) * 100,
-   label: labels[i]
- };
- 
-}*/
-//data = [[1, 2, 3], [4, 5, 6]];
+
+
+
 data = [1, 2, 3];
 options = {
   //Title//
@@ -209,13 +185,15 @@ options = {
 };
 element = "";
 
+
+
 console.log(drawBarChart(data, options, element));
 console.log(yTicks(data));
 console.log(xAxisCssGrid(data));
 console.log(labels(options));
 console.log(options);
 console.log(options.labels.length !== options.xCount);
-//data Input functions//
+
 
 
 //chart axis
