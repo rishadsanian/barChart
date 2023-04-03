@@ -254,9 +254,9 @@
       //TODO - STACKED BARS
 
       //bars single
-      
-        for (i = 0; i < options.xCount; i++) {
-          if (chartType = "Single"){
+
+      for (i = 0; i < options.xCount; i++) {
+        if (chartType = "Single") {
           chartArea.append($('<div>')
             .addClass("bar" + (i + 1))
             .text(data[i])
@@ -272,10 +272,10 @@
               "align-items": options.valuePos
             })
           )
-          }
         }
-        //bars stacked
-      
+      }
+      //bars stacked
+
 
       // append to barChart
       barChart.append(title, yAxis, xAxis, chartArea);
