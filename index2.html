@@ -235,7 +235,8 @@
         "border-style": "none none groove groove",
         "display": "grid",
         "grid-template-columns": xAxisCssGrid(data)
-      });
+      })
+
 
       //TODO - STACKED BARS
 
@@ -256,7 +257,10 @@
               "justify-content": "center",
               "align-items": options.valuePos
             })
+            .hide().slideDown("slow")
           )
+
+
           //Stacked Bars container
         } else if (chartType = "Stacked") {
 
