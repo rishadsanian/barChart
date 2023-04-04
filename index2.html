@@ -258,13 +258,14 @@
               "align-items": options.valuePos
             })
             .hide().slideDown("slow")
+            
           )
 
 
           //Stacked Bars container
         } else if (chartType = "Stacked") {
 
-          var bar = $('<ul>')
+         chartArea.append($('<div>')
             .addClass("bar" + (i + 1))
             .css({
               "position": "absolute",
@@ -276,18 +277,11 @@
               "flex-direction": "column",
               "justify-content": "center",
               "align-items": options.valuePos
-            })
+            }))
 
-          chartArea.append(bar)
+          
         }
       }
-
-      /*bars stacked
-      stackedFlex.push("bar" + (i[j] + 1));
-            ("bar" + (i[j] + 1)).append($('<li>')
-              .addClass("stack" + (i[j] + 1))
-            )
-*/
 
       // append to barChart
       barChart.append(title, yAxis, xAxis, chartArea);
@@ -300,3 +294,4 @@
     $(document).ready(drawBarChart(data, options, element));
 
   </script>
+  

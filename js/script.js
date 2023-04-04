@@ -37,34 +37,30 @@ Font Colour
 
 
 ////functions
-
-
-
-
-var drawBarChart = function (data, options, element) {
-  //Chart type
+//Chart type
+var chartType = function (data) {
   if (typeof data[0] === 'number') {
     options.chartType = "Single";
+    options.dataset = [];
+    options.datasetColour = [];
+    for (i = 0; i < data.length; i++) {
+      options.dataset.push([data[i]]);
+      options.datasetColour.push([options.barColour[i]]);
+    }
+    options.barColour = options.datasetColour;
   } else if (typeof data[0] === 'object') {
     options.chartType = "Stacked";
+    options.dataset = data;
+    options.datasetColour = options.barColour;
   } else {
     options.chartType = "Invalid Data";
     alert("Invalid data");
   }
-
-  /*Label Validation
-
-  if (options.labels.length !== options.xCount) {
-    alert("Update Labels");
-  }
-*/
-
-
 };
 
 /////Y-Axis //FUTURE FEATURE add functionality to determine any negative numbers and max value under one
 
-var yTicks = function (data) {
+var yTicks = function (data, options) {
   var yTicks = ['0_'];
   var ticks = 0;
 
@@ -96,6 +92,7 @@ var yTicks = function (data) {
     }
   } options.minValue = minValue;
 
+
   //Determine the start value of y axis based on if there are any negative numbers and for  max value under one
 
 
@@ -117,6 +114,31 @@ var yTicks = function (data) {
   return (yTicks);
 };
 
+
+//stacksdata
+var stacksData = function (data, options) {
+  options.stacks = {};
+
+  for (i = 0; i < options.dataset.length; i++) {
+    var stackBarClass = "bar" + (i + 1);
+    options.stacks[stackBarClass] = [];
+    for (j = 0; j < options.dataset[i].length; j++) {
+      options.stacks[stackBarClass].push({
+        stackClass: ("stack" + (j + 1)),
+        stackLabel: options.labels[i],
+        stackData: options.dataset[i][j],
+        stackCategories: options.stackCategories[j],
+        stackGridArea: ((j + 1) + "/" + (i + 1) + "/span 1/span 1"),
+        stackColour: options.datasetColour[i][j],
+        stackHeight: ((options.dataset[i][j] / options.maxYValue) * 100)
+      });
+    }
+    options.stacks[stackBarClass].sort(function (a, b) {
+      return a.stackData - b.stackData;
+    });
+  }
+};
+
 //X-Axis
 var xAxisCssGrid = function (data) {
   var xAxisHtml = "";
@@ -132,7 +154,6 @@ var xAxisCssGrid = function (data) {
 };
 
 //X Labels
-
 var labels = function (options) {
   var labelsHtml = "";
   for (i = 0; i < options.labels.length; i++) {
@@ -142,59 +163,60 @@ var labels = function (options) {
   }
   options.labelsHtml = labelsHtml;
   return labelsHtml;
-
-
 };
 
-//bar heights stacked
-var stackedHeight = function (data) {
-  var stackGrid = [];
-  for (i = 0; i < data.length; i++) {
-    var stackHtml = "";
-    for (j = 0; j < data.length[i]; j++) {
-      stackHtml += "auto ";
-      console.log(stackHtml);
-    }
-    stackGrid.push(stackHtml);
-  }
-  options.stackedGrid = stackGrid;
-  return stackGrid;
+//validations and Errors
+
+
+
+var drawBarChart = function (data, options, element) {
+  chartType(data);
+  yTicks(data, options);
+  stacksData(data, options);
+  xAxisCssGrid(data);
+  labels(options);
 };
 
 
-/*/single
+//USER INPUT
+//single
 var data = [2, 5, 9, 3, 8];
 
-    options = {
+options = {
 
-      //Title//
-      titleName: "Title",
-      titleFontSize: "40px",
-      titleFontColour: "black",
+  //Title//
+  titleName: "Title",
+  titleFontSize: "40px",
+  titleFontColour: "black",
 
-      //Labels//
-      labels: ["a", "b", "c", "d", "e"],
-      labelColour: ["tomato", "orange", "dodgerblue", "brown", "green"],
+  //Labels//
+  labels: ["a", "b", "c", "d", "e"],
+  labelColour: ["tomato", "orange", "dodgerblue", "brown", "green"],
 
-      //Bar// FUTURE FEATURES - ANIMATION / AUTO BARSPACING OPTION
-      barColour: ["tomato", "orange", "dodgerblue", "brown", "green"],
-      barSpacing: "10%",
+  //Bar// FUTURE FEATURES - ANIMATION / AUTO BARSPACING OPTION
+  barColour: ["tomato", "orange", "dodgerblue", "brown", "green"],
+  barSpacing: "10%",
 
-      //Axes// FUTURE FEATURES - AXES LINE COLOUR AND FONT COLOUR / FONT STYLE//CHART AREA BACKGROUND COLOUR
-      yTitle: "Units",
-      xTitle: "X-Axis",
+  stackCategories: [],
 
-      //Position of value inside bar (for top - "baseline", for bottom - "end", and for middle - "center") // FUTURE FEATURES - HIDE VALUES
-      valuePos: "baseline"
-    };
+  //Axes// FUTURE FEATURES - AXES LINE COLOUR AND FONT COLOUR / FONT STYLE//CHART AREA BACKGROUND COLOUR
+  yTitle: "Units",
+  xTitle: "X-Axis",
 
-    //Chart Placement
-    var element = ".chart";
-/*/
+  //Position of value inside bar (for top - "baseline", for bottom - "end", and for middle - "center") // FUTURE FEATURES - HIDE VALUES
+  valuePos: "baseline"
+};
 
+//Chart Placement
+var element = ".chart";
+
+//TESTS
+drawBarChart(data, options, element);
+console.log(options);
+console.log(options.stacks);
 //Stacked
 
-data = [[1, 2], [4, 5], [7, 8]];
+data = [[1, 2], [5, 4], [7, 8]];
 options = {
   //Title//
   titleName: "Title",
@@ -204,7 +226,7 @@ options = {
   labels: ["alpha", "beta", "charlie"],
   labelColour: ["blue", "blue", "blue"],
   //Stacked Bar//
-  barColour: [["tomato", "orange"], ["dodgerblue", "red]"], ["green", "purple"]],
+  barColour: [["tomato", "orange"], ["dodgerblue", "red"], ["green", "purple"]],
   stackCategories: ["a", "b"],
   barSpacing: "20%",
   //Axes//
@@ -218,19 +240,7 @@ element = "";
 
 
 
-console.log(drawBarChart(data, options, element));
-console.log(yTicks(data));
-console.log(xAxisCssGrid(data));
-console.log(stackedHeight(data));
-console.log(labels(options));
+/*
+drawBarChart(data, options, element);
 console.log(options);
-console.log(options.labels.length !== options.xCount);
-
-
-
-//chart axis
-//chart graphic
-
-
-
-
+*/
