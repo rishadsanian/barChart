@@ -139,6 +139,20 @@ var stacksData = function (data, options) {
   }
 };
 
+//Height and Bottom
+var stackHeight = function (options) {
+  for (i = 0; i < options.dataset.length; i++) {
+    var bottom = 0;
+    for (j = 0; j < options.dataset[i].length; j++) {
+      options.stacks["bar" + (i + 1)][j].stackBottom = bottom ;
+      options.stacks["bar" + (i + 1)][j].stackHeight = (
+        options.stacks["bar" + (i + 1)][j].stackHeight - bottom
+      );
+      bottom = options.stacks["bar" + (i + 1)][j].stackHeight;
+    }
+  }
+};
+
 //X-Axis
 var xAxisCssGrid = function (data) {
   var xAxisHtml = "";
@@ -173,6 +187,7 @@ var drawBarChart = function (data, options, element) {
   chartType(data);
   yTicks(data, options);
   stacksData(data, options);
+  stackHeight(options);
   xAxisCssGrid(data);
   labels(options);
 };
@@ -210,10 +225,11 @@ options = {
 //Chart Placement
 var element = ".chart";
 
-//TESTS
+/*/TESTS
 drawBarChart(data, options, element);
 console.log(options);
 console.log(options.stacks);
+*/
 //Stacked
 
 data = [[1, 2], [5, 4], [7, 8]];
@@ -240,7 +256,8 @@ element = "";
 
 
 
-/*
+//
 drawBarChart(data, options, element);
 console.log(options);
-*/
+console.log(options.stacks);
+//
