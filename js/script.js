@@ -144,11 +144,15 @@ var stackHeight = function (options) {
   for (i = 0; i < options.dataset.length; i++) {
     var bottom = 0;
     for (j = 0; j < options.dataset[i].length; j++) {
-      options.stacks["bar" + (i + 1)][j].stackBottom = bottom ;
+      options.stacks["bar" + (i + 1)][j].stackBottom = bottom;
       options.stacks["bar" + (i + 1)][j].stackHeight = (
         options.stacks["bar" + (i + 1)][j].stackHeight - bottom
       );
       bottom = options.stacks["bar" + (i + 1)][j].stackHeight;
+      //JQUERY CSS
+      (options.stacks["bar" + (i + 1)][j].stackHeight = options.stacks["bar" + (i + 1)][j].stackHeight + "%");
+      (options.stacks["bar" + (i + 1)][j].stackBottom = (options.stacks["bar" + (i + 1)][j].stackBottom + "%"));
+
     }
   }
 };
@@ -225,11 +229,11 @@ options = {
 //Chart Placement
 var element = ".chart";
 
-/*/TESTS
+//TESTS
 drawBarChart(data, options, element);
 console.log(options);
-console.log(options.stacks);
-*/
+
+//
 //Stacked
 
 data = [[1, 2], [5, 4], [7, 8]];
@@ -257,7 +261,5 @@ element = "";
 
 
 //
-drawBarChart(data, options, element);
-console.log(options);
-console.log(options.stacks);
+
 //
