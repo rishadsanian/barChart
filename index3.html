@@ -26,7 +26,7 @@
   <script>
     //User Input // FUTURE FEAUTURES - MULTIPLE/STACKED BARS / NEGATIVE NUMBERS / DECIMALS FOR MAX VALUE UNDER 1 / ANIMATION /  MORE EFFECIENT NORMALIZATION /ERROR DISPLAYS
 
-    //USER DATA SINGLE
+    /*/USER DATA SINGLE
 
 
 
@@ -60,22 +60,22 @@
     //Chart Placement
     var element = ".chart";
 
-    //
+    /*/
 
-    /*/ USER DATA stacked
-    var data = [[5,5], [8, 4], [3, 7]];
+    // USER DATA stacked
+    var data = [[5, 2, 9], [8, 14, 6], [3, 10, 1], [12, 7, 3]];
     var options = {
       //Title//
       titleName: "Title",
       titleFontSize: "40px",
       titleFontColour: "black",
       //Bar Labels//
-      labels: ["alpha", "beta", "charlie"],
-      labelColour: ["blue", "blue", "blue"],
+      labels: ["alpha", "beta", "charlie", "delta"],
+      labelColour: ["blue", "blue", "blue", "blue"],
       //Stacked Bar - Stack Colours//
-      barColour: [["tomato", "orange"], ["dodgerblue", "red"], ["green", "purple"]],
-      stackCategories: ["a", "b"],
-      barSpacing: "20%",
+      barColour: [["tomato", "dodgerblue", "brown"], ["orange", "violet", "green"], ["dodgerblue", "purple", "yellow"], ["Mediumseagreen", "violet", "lightgray"]],
+      stackCategories: ["a", "b", "c", "d"],
+      barSpacing: "15%",
       //Axes//
       yTitle: "Units",
       xTitle: "X-Axis",
@@ -84,7 +84,7 @@
       valuePos: "baseline"
     };
     var element = ".chart";
-    /*/
+    //
 
 
 
@@ -152,7 +152,7 @@
 
         for (i = 0; i < 5; i++) {
           ticks += Math.ceil(0.20 * options.maxValue);
-          yTicks.unshift((ticks + "-<br><br><br><br>"));
+          yTicks.unshift((ticks + "-<br><br><br><br><br>"));
         }
         yTicks = yTicks.join("");
         options.maxYValue = ticks;
@@ -288,7 +288,7 @@
 
       var xTitle = $('<div>')
         .addClass('xTitle')
-        .text(options.xTitle)
+        .html("<h3>"+options.xTitle+"</h4>")
         .css({
           "background-color": "white",
           "grid-area": "2/1/span 2/span " + options.xCount,
@@ -333,6 +333,7 @@
               "text-align": "center",
               "justify-content": "center",
               "align-items": options.valuePos,
+              "border-style": "groove groove none groove"
             })
           )
           bottom = height;
