@@ -51,7 +51,13 @@ var chartType = function (data) {
   } else if (typeof data[0] === 'object') {
     options.chartType = "Stacked";
     options.dataset = data;
-    options.datasetColour = options.barColour;
+    options.datasetColour = [];
+    for (i = 0; i < data.length; i++) {
+      options.datasetColour[i] = [];
+      for (j = 0; j < options.barColour.length; j++) {
+        options.datasetColour[i][j] = ([options.barColour[j]]);
+      }
+    }
   } else {
     options.chartType = "Invalid Data";
     alert("Invalid data");
@@ -69,13 +75,13 @@ var yTicks = function (data, options) {
   if (options.chartType === 'Single') {
     maxValue = Math.max.apply(null, data);
   } else if (options.chartType === 'Stacked') {
+    var maxValues = [];
     for (i = 0; i < data.length; i++) {
-      for (j = 0; j < data[i].length; j++) {
-        if (data[i][j] > maxValue) {
-          maxValue = data[i][j];
-        }
-      }
-    }
+      var sum = data[i].reduce(function (a, b) {
+        return a + b;
+      });
+      maxValues.push(sum);
+    } maxValue = Math.max.apply(null, maxValues);
   } options.maxValue = maxValue;
 
   //MinValue
@@ -133,9 +139,9 @@ var stacksData = function (data, options) {
         stackHeight: ((options.dataset[i][j] / options.maxYValue) * 100)
       });
     }
-    options.stacks[stackBarClass].sort(function (a, b) {
-      return a.stackData - b.stackData;
-    });
+    /* options.stacks[stackBarClass].sort(function (a, b) {
+       return a.stackData - b.stackData;
+     });*/
   }
 };
 
@@ -232,11 +238,11 @@ var element = ".chart";
 //TESTS
 drawBarChart(data, options, element);
 console.log(options);
-
+console.log(options.stacks);
 //
 //Stacked
 
-data = [[1, 2], [5, 4], [7, 8]];
+data = [[1, 2, 3], [5, 4, 6], [7, 8, 9]];
 options = {
   //Title//
   titleName: "Title",
@@ -246,8 +252,8 @@ options = {
   labels: ["alpha", "beta", "charlie"],
   labelColour: ["blue", "blue", "blue"],
   //Stacked Bar//
-  barColour: [["tomato", "orange"], ["dodgerblue", "red"], ["green", "purple"]],
-  stackCategories: ["a", "b"],
+  barColour: ["tomato", "dodgerblue", "orange"],
+  stackCategories: ["a", "b", "c"],
   barSpacing: "20%",
   //Axes//
   yTitle: "Units",
@@ -260,6 +266,19 @@ element = "";
 
 
 
-//
 
 //
+drawBarChart(data, options, element);
+console.log(options);
+console.log(options.stacks);
+
+//
+
+var dataset1 = [1, 2, 3];
+
+var barColour1 = ["tomato", "dodgerblue", "green"];
+
+
+var nestedArray = new Array(dataset1.length).fill(barColour1);
+
+console.log(nestedArray);
