@@ -282,3 +282,5 @@ var barColour1 = ["tomato", "dodgerblue", "green"];
 var nestedArray = new Array(dataset1.length).fill(barColour1);
 
 console.log(nestedArray);
+
+
