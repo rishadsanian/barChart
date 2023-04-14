@@ -245,10 +245,12 @@
 
       var yTitle = $('<div>')
         .addClass('yTitle')
-        .text(options.yTitle)
+        .html("<h3>"+options.yTitle+"</h3")
         .css({
-          'text-align': 'right',
-          "grid-area": "1/1/span 10 /span 1"
+          'text-align': 'center',
+          "grid-area": "1/1/span 10 /span 1",
+          "writing-mode": "vertical-rl",
+         // "text-orientation": "upright"
         });
 
       var yTicks = $('<div>')
