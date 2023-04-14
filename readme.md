@@ -23,9 +23,9 @@ Bar Chart Generator version 1.0 has the following known issues:
 <br><br>
 <ul>
 <li>Does not work with negative numbers
-<li>Y-axis ticks need to be improved for numbers that require decimals
+<li>Y-axis ticks need to be improved for numbers that require decimals and a multiplier is needed to determine number of ticks
 <li>Y-axis needs to adjust for decimals, especially when the max value of data is 1 or less
-<li>Title positioning does not match X-axis title positioning
+<li>Scaling is not perfect when it comes to auto spacing
   </ul>
 <h2>Future Features</h2>
 Future versions of Bar Chart Generator may include the following features:
