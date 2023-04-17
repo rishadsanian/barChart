@@ -108,7 +108,7 @@
       barColour: ["#003f5c", "#444e86", "#955196"],
       //Stacked Chart Options and legend
       stackCategories: ["0 to 17 years", "18 to 64 years", "65 years and over"],
-      legendLocation: "bottom", //top or bottom
+      legendLocation: "top", //top or bottom
       //Bar Size
       barSpacing: "3%",
       //Axes//
@@ -419,6 +419,7 @@
           "padding": "5px 15px",
           "grid-area": "2/1/span 1/span 1",
           "text-align": "center",
+          "margin" : "auto"
 
         });
 
@@ -431,7 +432,8 @@
 
       if (options.legendLocation == "top") {
         legendBox.css({
-          "font-size": "50%"
+          "font-size": "50%",
+          "grid-area": "2/1/span 2/span 10",
         }).appendTo(title);
 
       } else if (options.legendLocation == "bottom") {

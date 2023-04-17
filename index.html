@@ -10,6 +10,11 @@
       font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
       padding: 2%;
     }
+
+    .chart {
+      width: 90%;
+      height: 90%;
+    }
   </style>
   <title>Bar Chart Maker</title>
 </head>
@@ -19,55 +24,129 @@
     <h1>Bar Chart Generator</h1>
   </header>
 
-  <p class="chart">
+  <h2>Single Bar Chart</h2>
+
+  <p class="singleChart">
+  </p>
+
+  <h2>Stacked Bar Chart</h2>
+  <p class="stackedChart">
 
   </p>
 
-
-
   <script>
-
     //User Input // FUTURE FEAUTURES - MULTIPLE/STACKED BARS / NEGATIVE NUMBERS / DECIMALS FOR MAX VALUE UNDER 1 / ANIMATION /  MORE EFFECIENT NORMALIZATION /ERROR DISPLAYS
 
-    //USER DATA
-    var data = [2, 5, 9, 3, 8];
+    //USER DATA SINGLE
 
-    options = {
+    var data = [1, 3, 1, 3, 2];
+
+    var options = {
 
       //Title//
       titleName: "Title",
       titleFontSize: "40px",
       titleFontColour: "black",
 
-      //Labels//
+      //X Axis Labels//
       labels: ["a", "b", "c", "d", "e"],
-      labelColour: ["tomato", "orange", "dodgerblue", "brown", "green"],
+      labelColour: "black",
 
       //Bar// FUTURE FEATURES - ANIMATION / AUTO BARSPACING OPTION
       barColour: ["tomato", "orange", "dodgerblue", "brown", "green"],
       barSpacing: "10%",
 
+      stackCategories: [""],
+
       //Axes// FUTURE FEATURES - AXES LINE COLOUR AND FONT COLOUR / FONT STYLE//CHART AREA BACKGROUND COLOUR
       yTitle: "Units",
       xTitle: "X-Axis",
+
+      //ChartArea background colour -added
+      backColour: "whitesmoke",
 
       //Position of value inside bar (for top - "baseline", for bottom - "end", and for middle - "center") // FUTURE FEATURES - HIDE VALUES
       valuePos: "center"
     };
 
     //Chart Placement
-    var element = ".chart";
+    var element = ".singleChart";
 
+    //
+
+    //Execute function when page loads
+    $(document).ready(drawBarChart(data, options, element));
+
+    // USER DATA stacked
+    var data = 
+    [
+  [22.3, 73.9, 3.8], // NL
+  [22.2, 76.3, 1.4], // PEI
+  [21.4, 79.5, 2.8], // NS
+  [22.1, 77.9, 0.0], // NB
+  [21.9, 71.5, 6.6], // QC
+  [21.5, 74.7, 3.8], // ON
+  [21.5, 74.5, 3.9], // MB
+  [21.3, 74.0, 4.7], // SK
+  [22.5, 75.1, 2.3], // AB
+  [20.3, 76.8, 2.9], // BC
+  [23.5, 80.9, 1.4], // YT
+  [29.4, 67.1, 3.5], // NT
+  [36.7, 60.4, 2.9], // NU
+]
+
+;
+    var options = {   
+      //Title//
+      titleName: "2022 Canadian Provincial Population by Age Groups Percentage",
+      titleFontSize: "40px",
+      titleFontColour: "black",
+      //X-Axis Labels//
+      labels: ["NL", "PEI", "NS", "NB", "QC", "ON", "MB", "SK", "AB", "BC", "YT", "NT", "NU"],
+      labelColour: "black",
+      // Bar - Stack Colours//
+      barColour: ["#003f5c", "#444e86", "#955196"],
+      //Stacked Chart Options and legend
+      stackCategories: ["0 to 17 years", "18 to 64 years", "65 years and over"],
+      legendLocation: "bottom", //top or bottom
+      //Bar Size
+      barSpacing: "3%",
+      //Axes//
+      yTitle: "% per total population per province",
+      xTitle: "Year",
+
+      //ChartArea background colour -added
+      backColour: "white",
+
+      //Value Position inside bar
+      valuePos: "center"
+    };
+    var element = ".stackedChart";
+
+    //
+
+    //Execute function when page loads
+    $(document).ready(drawBarChart(data, options, element));
 
     //Bar Chart Function
-
     function drawBarChart(data, options, element) {
 
       //Chart type////FUTURE FEATURE - MORE ROBUST DATA ERROR DETECTION
+
       if (typeof data[0] === 'number') {
         options.chartType = "Single";
+        options.dataset = [];
+        options.datasetColour = [];
+        for (i = 0; i < data.length; i++) {
+          options.dataset.push([data[i]]);
+          options.datasetColour.push([options.barColour[i]]);
+        }
+        options.barColour = options.datasetColour;
       } else if (typeof data[0] === 'object') {
         options.chartType = "Stacked";
+        options.dataset = data;
+        var nestedStackColour = new Array(data.length).fill(options.barColour);
+        options.datasetColour = nestedStackColour;
       } else {
         options.chartType = "Invalid Data";
         alert("Invalid data");
@@ -80,22 +159,23 @@
         var yTicks = ['0_'];
         var ticks = 0;
 
-        // MaxValue // FUTURE FEATURE add functionality to determine any negative numbers and max value under one
+        // MaxValue // FUTURE FEATURE add functionality to determine any negative numbers and max value under one // can be refactored to calculate from options.dataset
+        // MaxValue //
         var maxValue = 0;
         if (options.chartType === 'Single') {
           maxValue = Math.max.apply(null, data);
         } else if (options.chartType === 'Stacked') {
+          var maxValues = [];
           for (i = 0; i < data.length; i++) {
-            for (j = 0; j < data[i].length; j++) {
-              if (data[i][j] > maxValue) {
-                maxValue = data[i][j];
-              }
-            }
-          }
+            var sum = data[i].reduce(function (a, b) {
+              return a + b;
+            });
+            maxValues.push(sum);
+          } maxValue = Math.max.apply(null, maxValues);
         } options.maxValue = maxValue;
 
         //MinValue
-        var minValue = 0;
+        var minValue = maxValue;
         if (options.chartType === 'Single') {
           minValue = Math.min.apply(null, data);
         } else if (options.chartType === 'Stacked') {
@@ -112,7 +192,7 @@
 
         for (i = 0; i < 5; i++) {
           ticks += Math.ceil(0.20 * options.maxValue);
-          yTicks.unshift((ticks + "-<br><br><br><br>"));
+          yTicks.unshift((ticks + "-<br><br><br><br><br>"));
         }
         yTicks = yTicks.join("");
         options.maxYValue = ticks;
@@ -124,23 +204,35 @@
       var xAxisCssGrid = function (data) {
         var xAxisHtml = "";
         var xAxisCount = 0;
-        if (options.chartType === 'Single') {
-          for (i = 0; i < data.length; i++) {
-            xAxisCount++;
-            xAxisHtml += "auto ";
-          }
-        } else if (options.chartType === 'Stacked') {
-          for (i = 0; i < data.length; i++) {
-            for (j = 0; j < data[i].length; j++) {
-              xAxisCount++;
-              xAxisHtml += "auto ";
-            }
-          }
+        for (i = 0; i < data.length; i++) {
+          xAxisCount++;
+          xAxisHtml += "auto ";
+          options.ySpan = 1;
         }
         options.xCount = xAxisCount;
-        options.xAxisHtml = xAxisHtml;
+        options.xAxisHtml = xAxisHtml.slice(0, -1);
         return xAxisHtml;
       };
+
+      //stacksdata --TODO needs cleaning up
+      options.stacks = {};
+
+      for (i = 0; i < options.dataset.length; i++) {
+        var stackBarClass = "bar" + (i + 1);
+        options.stacks[stackBarClass] = [];
+        for (j = 0; j < options.dataset[i].length; j++) {
+          options.stacks[stackBarClass].push({
+            stackClass: ("stack" + (j + 1)),
+            stackLabel: options.labels[i],
+            stackData: options.dataset[i][j],
+            stackCategories: options.stackCategories[j],
+            stackGridArea: ((j + 1) + "/" + (i + 1) + "/span 1/span 1"),
+            stackColour: options.datasetColour[i][j],
+            stackHeight: ((options.dataset[i][j] / options.maxYValue) * 100)
+          });
+        }
+      }
+
 
       ////Jquery Dom Manipulation plus css
 
@@ -161,12 +253,15 @@
       // Title
       var title = $('<div>')
         .addClass('title')
-        .text(options.titleName)
+        .html(options.titleName + "<br><br>")
         .css({
+          'display': 'grid',
           'grid-area': '1/1/span 1/span 11',
           'text-align': 'center',
           'font-size': options.titleFontSize,
-          'color': options.titleFontColour
+          'color': options.titleFontColour,
+          "justify-content": "center",
+          "grid-template-rows": "auto, auto"
         });
 
 
@@ -175,15 +270,23 @@
         .addClass('yAxis')
         .css({
           'position': 'relative',
+          'display': 'grid',
           'grid-area': '2/1/span 10 /span 1',
-          'text-align': 'right'
+          'text-align': 'right',
+          "grid-template-rows": "auto, auto"
+
         });
 
       var yTitle = $('<div>')
         .addClass('yTitle')
-        .text(options.yTitle)
+        .html("<h3>" + options.yTitle + "</h3")
         .css({
-          'text-align': 'center'
+          'text-align': 'center',
+          "writing-mode": "vertical-rl",
+          "grid-area": "1/1/span 10 /span 1",
+          "transform": " rotate(180deg)",
+          "top":'0'
+          // "text-orientation": "upright" sideways not compatible with all browsers
         });
 
       var yTicks = $('<div>')
@@ -191,6 +294,7 @@
         .html(yTicks(data))
         .css({
           'position': 'relative',
+          "grid-area": "1/2/span 10 /span 1",
           'right': '0',
           'bottom': '0%'
         });
@@ -218,8 +322,9 @@
           .addClass("label" + (i + 1))
           .text(options.labels[i])
           .css({
-            "position": "center",
-            "color": options.labelColour[i]
+            "position": "relative",
+            "color": options.labelColour,
+            // "transform": " rotate(-45deg)"// todo if label text size longer than bar size
           })
         )
       }
@@ -228,58 +333,123 @@
 
       var xTitle = $('<div>')
         .addClass('xTitle')
-        .text(options.xTitle)
+        .html("<h3>" + options.xTitle + "</h3>")
         .css({
+          "position": "relative",
+          "display": "grid",
           "background-color": "white",
-          "grid-area": "2/1/span 2/span " + options.xCount,
-          "position": "center"
+          "padding": "5px 15px",
+          "grid-area": "14/2/span 1/span 10",
+          "justify-content": "center",
+          "text-align": "center",
+          "grid-template-rows": "auto, auto"
         })
 
-      xAxis.append(xTitle);
-
       // Chart Area (Bars and Values) 
-
       var chartArea = $('<div>').addClass('chartArea').css({
         "position": "relative",
         "grid-area": "2/2/span 10/span 10",
         "grid-gap": options.barSpacing,
         "padding-left": "10%",
         "padding-right": "10%",
-        "background-color": "whitesmoke",
+        "background-color": options.backColour,
         "border-style": "none none groove groove",
         "display": "grid",
-        "grid-template-columns": xAxisCssGrid(data)
+        "grid-template-columns": xAxisCssGrid(data),
       });
 
-      //TODO - STACKED BARS
+      //BARS // multiple/stacked
 
-      //bars single
-      for (i = 0; i < options.xCount; i++) {
-        chartArea.append($('<div>')
-          .addClass("bar" + (i + 1))
-          .text(data[i])
-          .css({
-            "position": "absolute",
-            "bottom": "0",
-            "grid-area": "1/" + [i + 1] + "/span 1/span 1",
-            "background-color": options.barColour[i],
-            "height": ((data[i] / options.maxYValue) * 100) + "%",
-            "width": "100%",
-            "display": "flex",
-            "justify-content": "center",
-            "align-items": options.valuePos
-          })
-        )
+      for (i = 0; i < options.dataset.length; i++) {
+        var stackBarClass = ("bar" + (i + 1));
+        var bottom = 0;
+        var height = 0
+        for (j = 0; j < options.dataset[i].length; j++) {
+          var stackClass = (j);
+          bottom = (height + bottom);
+          height = ((options.stacks[stackBarClass][stackClass].stackData / options.maxYValue) * 100);
+          chartArea.append($('<table>')
+            .addClass(stackBarClass)
+            .append($('<div>'))
+            .addClass("stack" + (j + 1))
+            .text(options.stacks[stackBarClass][stackClass].stackData)
+            .css({
+              "position": "absolute",
+              "grid-area": options.stacks[stackBarClass][stackClass].stackGridArea,
+              "background-color": options.stacks[stackBarClass][stackClass].stackColour,
+              "bottom": 0 + "%",
+              "height": 0 + "%",
+              "width": "100%",
+              "text-align": "center",
+              "display":"flex",
+              "justify-content": "center",
+              "align-items": options.valuePos,
+            })
+            .animate({
+              height: (height) + "%",
+              bottom: bottom + "%"
+            }, 1000)
+
+
+          )
+
+          /*/Total for bars TODO
+          if (options.chartType === "Stacked") {
+            chartArea.append($('<div>'))
+              .addClass(stackTotal)
+              .text("total")
+              .css({
+                "position": "absolute"
+              })
+          }
+          
+          //Grid lines todo*/
+
+        }
       }
 
+      //LEGEND for stacked bar chart
+
+      if (options.chartType === "Stacked") {
+        var legendBox = $('<ul>').addClass('legendBox').css({
+          "position": "relative",
+          "width": "fit-content",
+          "background": "#fff",
+          "border": "1px solid #000",
+          "padding": "5px 15px",
+          "grid-area": "2/1/span 1/span 1",
+          "text-align": "center",
+          "margin" : "auto"
+
+        });
+
+        for (i = 0; i < options.stackCategories.length; i++) {
+          var dt = $("<li>").html('&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp').css({ "display": "inline-block", "background": options.barColour[i] });
+          var dd = $("<dt>").html("&nbsp" + options.stackCategories[i] + "&nbsp&nbsp&nbsp&nbsp").css({ "display": "inline", "text-align": "right" });
+          legendBox.append(dt).append(dd);
+        }
+      }
+
+      if (options.legendLocation == "top") {
+        legendBox.css({
+          "font-size": "50%",
+          "grid-area": "2/1/span 2/span 10",
+        }).appendTo(title);
+
+      } else if (options.legendLocation == "bottom") {
+        legendBox.css({
+          "font-size": "120%"
+        }).appendTo(xTitle);
+      };
+
       // append to barChart
-      barChart.append(title, yAxis, xAxis, chartArea);
+      barChart.append(title, yAxis, xAxis, chartArea, xTitle);
 
       // append to user inputed element
       $(element).append(barChart);
     }
 
-    //Execute function when page loads
-    $(document).ready(drawBarChart(data, options, element));
-
   </script>
+</body>
+
+</html>
