@@ -38,56 +38,27 @@
 
       //USER DATA SINGLE
 
-      var data = [
-        276600, 339000, 384600, 279000, 477177, 911078, 353589, 323600, 462086,
-        992861, 497567, 499264,
-      ];
+      var data = [572.8, 469.8, 365.8, 292.1, 287.6];
 
       var options = {
         //Title//
-        titleName: "Average  Home Price Index in Canada",
+        titleName: "Top 5 Companies   in 2022 by Revenue",
         titleFontSize: "40px",
         titleFontColour: "black",
 
         //X Axis Labels//
-        labels: [
-          "NL",
-          "PEI",
-          "NS",
-          "NB",
-          "QC",
-          "ON",
-          "MB",
-          "SK",
-          "AB",
-          "BC",
-          "YT",
-          "NT",
-        ],
+        labels: ["Walmart", "Amazon", "Apple", "CVS", "UnitedHealth"],
         labelColour: "black",
 
         //Bar// FUTURE FEATURES - ANIMATION / AUTO BARSPACING OPTION
-        barColour: [
-          "#FF6347",
-          "#FFA500",
-          "#1E90FF",
-          "#A52A2A",
-          "#008000",
-          "#FF00FF",
-          "#00FFFF",
-          "#800000",
-          "#008000",
-          "#000080",
-          "#808000",
-          "#800080",
-        ],
-        barSpacing: "2%",
+        barColour: ["#FF6347", "#FFA500", "#1E90FF", "#A52A2A", "#008000"],
+        barSpacing: "8%",
 
         stackCategories: [""],
 
         //Axes// FUTURE FEATURES - AXES LINE COLOUR AND FONT COLOUR / FONT STYLE//CHART AREA BACKGROUND COLOUR
-        yTitle: "Canadian $",
-        xTitle: "Region",
+        yTitle: "USD (Billion $)",
+        xTitle: "Company",
 
         //ChartArea background colour -added
         backColour: "whitesmoke",
@@ -96,7 +67,7 @@
         valuePos: "center",
         valueColor: "white",
 
-        //Source
+        //Source Future Feature
         source: "",
         sourceUrl: "",
       };
@@ -171,7 +142,7 @@
         valuePos: "center",
         valueColor: "black",
 
-        //Source
+        //Source Future Feature
         source: "",
         sourceUrl: "",
       };
@@ -218,7 +189,7 @@
           // MaxValue //
           var maxValue = 0;
           if (options.chartType === "Single") {
-            maxValue = Math.max.apply(null, data);
+            maxValue = Math.max.apply(null, data) * 1.1;
           } else if (options.chartType === "Stacked") {
             var maxValues = [];
             for (i = 0; i < data.length; i++) {
@@ -311,7 +282,7 @@
           .html(options.titleName + "<br><br>")
           .css({
             display: "grid",
-            "grid-area": "1/1/span 1/span 11",
+            "grid-area": "1/2/span 1/span 10",
             "text-align": "center",
             "font-size": options.titleFontSize,
             color: options.titleFontColour,
@@ -362,17 +333,38 @@
             "grid-gap": options.barSpacing,
             "padding-left": "10%",
             "padding-right": "10%",
+            overflow: "hidden",
+            // border: "solid",
           });
 
         // Labels
+        var labels = $("<div>")
+          .addClass("labels")
+          .css({
+            position: "relative",
+            "grid-area": "1/1/span 10/span " + data.length,
+            "grid-gap": options.barSpacing,
+            width: "100%",
+            "text-align": "center",
+            // border: "solid",
+            display: "flex",
+            "grid-template-columns": xAxisCssGrid(data),
+          });
+        xAxis.append(labels);
         for (i = 0; i < options.labels.length; i++) {
-          xAxis.append(
+          labels.append(
             $("<div>")
               .addClass("label" + (i + 1))
               .text(options.labels[i])
               .css({
                 position: "relative",
                 color: options.labelColour,
+                width: "100%",
+                "text-align": "center",
+                display: "flex",
+                "justify-content": "space-evenly",
+                //   border: "solid",
+
                 // "transform": " rotate(-45deg)"// todo if label text size longer than bar size
               })
           );
@@ -479,6 +471,11 @@
             "text-align": "center",
             margin: "auto",
           });
+          if (options.legendLocation === "top") {
+            legendBox.css({
+              top: "-25px",
+            });
+          }
 
           for (i = 0; i < options.stackCategories.length; i++) {
             var dt = $("<li>").html("&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp").css({
